@@ -1,0 +1,4671 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI GOODIN | Future Meets Creativity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Gold - רק ללוגו והדגשות */
+      --gold-light: #FFD700;
+      --gold-medium: #FFA500;
+      --gold-dark: #FF8C00;
+
+      /* Purple Spectrum */
+      --purple-dark: #1E1030;
+      --purple-medium: #2D1B4E;
+      --purple-light: #8B5CF6;
+      --purple-bright: #A78BFA;
+
+      /* Cyan/Teal */
+      --cyan: #06B6D4;
+      --cyan-light: #00D4FF;
+
+      /* Neutrals */
+      --black: #000000;
+      --black-soft: #0A0A0A;
+      --white: #FFFFFF;
+
+      /* Gradients */
+      --gradient-title: linear-gradient(90deg, #8B5CF6, #6366F1, #3B82F6);
+      --gradient-vibe: linear-gradient(90deg, #06B6D4, #8B5CF6);
+      --gradient-gold: radial-gradient(circle, #FFD700, #FFA500, #FF8C00);
+      --gradient-bg: linear-gradient(180deg, #1E1030, #000000);
+
+      --text-light: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.7);
+    }
+
+    body {
+      background: transparent;
+      font-family: 'Heebo', sans-serif;
+      color: var(--text-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Gears Canvas */
+    #gears-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+      background: linear-gradient(90deg,
+        rgba(30, 16, 48, 0.85) 0%,
+        rgba(30, 16, 48, 0.6) 20%,
+        transparent 35%,
+        transparent 65%,
+        rgba(30, 16, 48, 0.6) 80%,
+        rgba(30, 16, 48, 0.85) 100%
+      );
+      padding-bottom: 2.5rem;
+    }
+
+    .nav.scrolled {
+      background: linear-gradient(90deg,
+        rgba(30, 16, 48, 0.9) 0%,
+        rgba(30, 16, 48, 0.7) 20%,
+        transparent 35%,
+        transparent 65%,
+        rgba(30, 16, 48, 0.7) 80%,
+        rgba(30, 16, 48, 0.9) 100%
+      );
+      backdrop-filter: none;
+      padding: 1rem 3rem;
+      border-bottom: none;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-g {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--gradient-gold);
+      border-radius: 50%;
+      font-weight: 800;
+      color: var(--black);
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+    }
+
+    .logo-text {
+      color: var(--white);
+    }
+
+    .nav-logo-svg {
+      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+    }
+
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      margin-right: auto;
+      padding-right: 3rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--purple-light);
+    }
+
+    .nav-cta {
+      background: transparent;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid var(--purple-light);
+      transition: all 0.3s ease;
+      margin-inline-start: 2rem;
+    }
+
+    .nav-cta:hover {
+      background: var(--purple-light);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
+    }
+
+    /* Sections */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 5%;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding-top: 60px;
+      background: linear-gradient(180deg,
+        rgba(30, 16, 48, 0.5) 0%,
+        rgba(30, 16, 48, 0.3) 40%,
+        rgba(30, 16, 48, 0.15) 70%,
+        transparent 100%
+      );
+    }
+
+    /* GOODIN Logo above title */
+    .hero-logo-top {
+      margin-bottom: 0.3rem;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 150;
+    }
+
+    .hero-logo-svg {
+      width: 300px;
+      height: 300px;
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.5));
+      animation: logoFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4)); }
+      50% { transform: translateY(-5px); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
+    }
+
+
+    .hero-logo {
+      margin-bottom: 1rem;
+    }
+
+    .hero-logo-g {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-gold);
+      border-radius: 50%;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--black);
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 165, 0, 0.4));
+      animation: logoGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes logoGlow {
+      0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)); }
+      50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 40px rgba(255, 165, 0, 0.6)); }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 4.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      position: relative;
+      /* Gold stripes flowing through purple gradient */
+      background: 
+        repeating-linear-gradient(
+          105deg,
+          transparent 0px,
+          transparent 8px,
+          rgba(255, 215, 0, 0.7) 8px,
+          rgba(255, 165, 0, 0.8) 10px,
+          rgba(255, 140, 0, 0.7) 12px,
+          transparent 12px,
+          transparent 25px
+        ),
+        linear-gradient(90deg, #8B5CF6 0%, #FFD700 25%, #6366F1 50%, #FFA500 75%, #3B82F6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 300% 100%;
+      animation: goldFlow 10s ease-in-out infinite;
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 30px rgba(139, 92, 246, 0.4));
+    }
+    
+    @keyframes goldFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+
+    
+    .title-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 0;
+      width: 100%;
+    }
+    
+    .circuit-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .circuit-svg {
+      position: absolute;
+      width: 350px;
+      height: 180px;
+      overflow: visible;
+    }
+    
+    .circuit-svg.left {
+      right: 100%;
+      margin-right: 5px;
+    }
+    
+    .circuit-svg.right {
+      left: 100%;
+      margin-left: 5px;
+    }
+    
+    .circuit-svg.left .circuit-path {
+      stroke: var(--gold-light);
+    }
+    
+    .circuit-svg.right .circuit-path {
+      stroke: var(--gold-light);
+    }
+    
+    .circuit-path {
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 3px var(--gold-light));
+      stroke-dasharray: 600;
+      stroke-dashoffset: 600;
+      animation: drawCircuit 4s ease-out forwards, pulseCircuit 8s ease-in-out infinite 4s;
+    }
+    
+    .circuit-path.d1 { animation-delay: 0.5s, 4.5s; stroke-width: 2; }
+    .circuit-path.d2 { animation-delay: 1s, 5s; stroke-width: 2; }
+    .circuit-path.d3 { animation-delay: 1.5s, 5.5s; stroke-width: 1.5; }
+    .circuit-path.d4 { animation-delay: 2s, 6s; stroke-width: 1.5; }
+    .circuit-path.d5 { animation-delay: 2.5s, 6.5s; stroke-width: 1.5; }
+    .circuit-path.d6 { animation-delay: 3s, 7s; stroke-width: 1.5; }
+    
+    .circuit-dot {
+      fill: var(--gold-light);
+      filter: drop-shadow(0 0 6px var(--gold-light)) drop-shadow(0 0 12px var(--gold-medium));
+      opacity: 0;
+      animation: showDot 1s ease-out forwards 3s, pulseDot 6s ease-in-out infinite 4s;
+    }
+    
+    .circuit-dot.d1 { animation-delay: 3.3s, 4.3s; }
+    .circuit-dot.d2 { animation-delay: 3.6s, 4.6s; }
+    .circuit-dot.d3 { animation-delay: 3.9s, 4.9s; }
+    .circuit-dot.d4 { animation-delay: 4.2s, 5.2s; }
+    .circuit-dot.d5 { animation-delay: 4.5s, 5.5s; }
+    .circuit-dot.d6 { animation-delay: 4.8s, 5.8s; }
+    
+    @keyframes drawCircuit {
+      to { stroke-dashoffset: 0; }
+    }
+    
+    @keyframes pulseCircuit {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
+    @keyframes showDot {
+      to { opacity: 1; }
+    }
+    
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 0.6; }
+      50% { transform: scale(1.3); opacity: 1; }
+    }
+    
+
+
+    .hero-subtitle {
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin-bottom: 1rem;
+      font-weight: 300;
+    }
+
+    .hero-services {
+      font-size: 1.1rem;
+      color: var(--cyan);
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--purple-light);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--purple-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(139, 92, 246, 0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: 2px solid var(--purple-light);
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(139, 92, 246, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Golden Divider */
+    .golden-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--gold-light) 20%, var(--gold-medium) 50%, var(--gold-light) 80%, transparent 100%);
+      margin: 0 auto;
+      max-width: 80%;
+    }
+
+    /* Services Section */
+    .services {
+      background: transparent;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 215, 0, 0.15);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.1);
+      border-color: rgba(255, 215, 0, 0.3);
+    }
+
+    
+    .service-icon svg {
+      filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.7));
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    
+    .service-icon {
+      margin-bottom: 1rem;
+    }
+
+    .service-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+
+    
+    .service-icon svg {
+      filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.7));
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    
+    .service-icon {
+      margin-bottom: 1rem;
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+    }
+
+    .service-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .service-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      color: var(--white);
+    }
+
+    .service-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-price {
+      color: var(--cyan);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .service-btn {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.5rem 1.5rem;
+      border: 2px solid var(--purple-light);
+      border-radius: 20px;
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .service-btn:hover {
+      background: var(--purple-light);
+    }
+
+    /* Vibe Coding Section */
+    .vibe-coding {
+      background: transparent;
+      text-align: center;
+    }
+
+    .vibe-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-style: italic;
+      background: var(--gradient-vibe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 2rem;
+    }
+
+    .vibe-description {
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Pricing Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 25px;
+      padding: 2.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--purple-light);
+      transform: scale(1.05);
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--purple-light);
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.2);
+    }
+
+    .pricing-card.featured:hover {
+      transform: scale(1.05) translateY(-10px);
+    }
+
+    .pricing-badge {
+      display: inline-block;
+      padding: 0.25rem 1rem;
+      background: var(--purple-light);
+      color: var(--white);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-card .price {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--white);
+      margin: 1rem 0;
+    }
+
+    .pricing-card .price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin: 1.5rem 0;
+      text-align: right;
+    }
+
+    .pricing-features li {
+      padding: 0.5rem 0;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .pricing-features li::before {
+      content: "✓";
+      color: var(--cyan);
+      margin-left: 0.5rem;
+    }
+
+    /* Portfolio Section */
+    .portfolio-section {
+      padding: 80px 5%;
+    }
+
+    .portfolio-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .portfolio-header h2 {
+      font-size: 2.5rem;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .portfolio-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .portfolio-card {
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 215, 0, 0.4);
+    }
+
+    .portfolio-image {
+      height: 200px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(255, 215, 0, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-image.purple {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(139, 92, 246, 0.3));
+    }
+
+    .portfolio-image.cyan {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.2));
+    }
+
+    .portfolio-image.gold {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.2));
+    }
+
+    .before-after-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      opacity: 0.8;
+    }
+
+    .redesign-category {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-medium)) !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background-clip: text !important;
+    }
+
+    .portfolio-mockup {
+      width: 70%;
+      height: 70%;
+      background: rgba(30, 16, 48, 0.9);
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .mockup-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .mockup-bar::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 2px;
+      width: 4px;
+      height: 4px;
+      background: #ff6b6b;
+      border-radius: 50%;
+      box-shadow: 8px 0 0 #ffd93d, 16px 0 0 #6bcb77;
+    }
+
+    .mockup-content {
+      height: calc(100% - 16px);
+      background: linear-gradient(180deg, rgba(139, 92, 246, 0.2), rgba(255, 215, 0, 0.1));
+      border-radius: 4px;
+    }
+
+    .portfolio-info {
+      padding: 1.5rem;
+    }
+
+    .portfolio-info h3 {
+      color: var(--white);
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+      transition: color 0.3s ease;
+    }
+
+    .portfolio-card:hover .portfolio-info h3 {
+      color: var(--gold-light);
+    }
+
+    .portfolio-category {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Redesign Promo Section */
+    .redesign-promo-section {
+      padding: 80px 5%;
+      background: linear-gradient(180deg, var(--purple-dark) 0%, rgba(0, 0, 0, 0.9) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .redesign-promo-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold-medium), var(--gold-light), transparent);
+    }
+
+    .redesign-promo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .promo-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-medium));
+      color: var(--black);
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .promo-content h2 {
+      font-size: 2.5rem;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .promo-content h2 .gold-text {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-medium));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .promo-desc {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .promo-benefits {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 2rem;
+    }
+
+    .promo-benefits li {
+      color: var(--white);
+      padding: 0.5rem 0;
+      font-size: 1rem;
+    }
+
+    .promo-cta-btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-medium));
+      color: var(--black);
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .promo-cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+    }
+
+    .demo-window {
+      background: rgba(30, 16, 48, 0.8);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .demo-header {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 0.8rem 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .demo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .demo-dot.red { background: #ff5f57; }
+    .demo-dot.yellow { background: #febc2e; }
+    .demo-dot.green { background: #28c840; }
+
+    .demo-content {
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .demo-before-after {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .demo-side {
+      text-align: center;
+    }
+
+    .demo-label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .demo-page {
+      width: 100px;
+      height: 80px;
+      background: rgba(50, 50, 50, 0.5);
+      border-radius: 8px;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .demo-page.new {
+      background: rgba(139, 92, 246, 0.2);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+    }
+
+    .demo-bar {
+      height: 8px;
+      background: rgba(100, 100, 100, 0.5);
+      border-radius: 4px;
+    }
+
+    .demo-bar.gold {
+      background: linear-gradient(90deg, var(--gold-light), var(--gold-medium));
+    }
+
+    .demo-block {
+      height: 20px;
+      background: rgba(80, 80, 80, 0.5);
+      border-radius: 4px;
+    }
+
+    .demo-block.small {
+      height: 12px;
+      width: 60%;
+    }
+
+    .demo-block.gold {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(139, 92, 246, 0.2));
+    }
+
+    .demo-arrow {
+      font-size: 1.5rem;
+      color: var(--gold-light);
+      animation: arrow-pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes arrow-pulse {
+      0%, 100% { opacity: 0.5; transform: translateX(0); }
+      50% { opacity: 1; transform: translateX(5px); }
+    }
+
+    .demo-placeholder {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    @media (max-width: 900px) {
+      .redesign-promo-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+
+      .promo-content h2 {
+        font-size: 2rem;
+      }
+
+      .promo-demo {
+        order: -1;
+      }
+    }
+
+    /* Accordion Pricing Section */
+    .pricing-accordion-section {
+      padding: 80px 5%;
+    }
+
+    .pricing-accordions {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pricing-accordion-item {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 1.5rem;
+      background: rgba(30, 16, 48, 0.6);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .accordion-header:hover {
+      border-color: rgba(139, 92, 246, 0.5);
+    }
+
+    .pricing-accordion-item.active .accordion-header {
+      border-color: rgba(255, 215, 0, 0.5);
+      background: rgba(30, 16, 48, 0.8);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .accordion-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .accordion-icon {
+      font-size: 1.5rem;
+    }
+
+    .accordion-title span:last-child {
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .accordion-arrow {
+      color: var(--gold-light);
+      font-size: 0.8rem;
+      transition: transform 0.3s ease;
+    }
+
+    .pricing-accordion-item.active .accordion-arrow {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 1.5rem;
+      background: rgba(20, 10, 35, 0.5);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+    }
+
+    .pricing-accordion-item.active .accordion-content {
+      display: block;
+    }
+
+    .accordion-tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .tier-card {
+      background: rgba(30, 16, 48, 0.5);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .tier-card:hover {
+      border-color: rgba(255, 215, 0, 0.3);
+      transform: translateY(-3px);
+    }
+
+    .tier-card.featured {
+      border-color: rgba(255, 215, 0, 0.5);
+      background: rgba(255, 215, 0, 0.05);
+    }
+
+    .tier-badge {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: var(--black);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .tier-card h4 {
+      color: var(--white);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .tier-price {
+      color: var(--gold-light);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .tier-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem 0;
+      text-align: right;
+    }
+
+    .tier-features li {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .tier-features li:last-child {
+      border-bottom: none;
+    }
+
+    .tier-features li::before {
+      content: '✓';
+      color: var(--gold-light);
+      margin-left: 0.5rem;
+    }
+
+    .tier-btn {
+      display: inline-block;
+      padding: 0.6rem 1.5rem;
+      background: transparent;
+      border: 1px solid rgba(255, 215, 0, 0.5);
+      border-radius: 20px;
+      color: var(--gold-light);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .tier-btn:hover {
+      background: var(--gold-light);
+      color: var(--black);
+    }
+
+    @media (max-width: 768px) {
+      .accordion-tiers {
+        grid-template-columns: 1fr;
+      }
+
+      .tier-card.featured {
+        order: -1;
+      }
+    }
+
+    /* Redesign Service - Featured Styling */
+    .pricing-accordion-item.featured-service {
+      border: 2px solid var(--gold-light);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+      position: relative;
+      overflow: visible;
+    }
+
+    .pricing-accordion-item.featured-service::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-light), var(--gold-medium), var(--gold-light));
+    }
+
+    .redesign-header {
+      background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, transparent 50%, rgba(139, 92, 246, 0.1) 100%);
+    }
+
+    .new-badge {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-medium)) !important;
+      color: var(--black) !important;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem !important;
+      font-weight: 700;
+      margin-right: 0.5rem;
+      animation: pulse-badge 2s ease-in-out infinite;
+    }
+
+    /* Fix title styling when badge is present */
+    .accordion-title .service-title {
+      color: var(--white);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        transform: scale(1.05);
+      }
+    }
+
+    .redesign-intro {
+      text-align: center;
+      padding: 1rem 0;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+    }
+
+    .redesign-intro p {
+      font-size: 1.1rem;
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    .tier-time {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      background: transparent;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .testimonial-card {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .testimonial-text {
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--black);
+    }
+
+    .author-info h4 {
+      color: var(--white);
+    }
+
+    .author-info p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    /* About Section - Stunning Premium Design */
+    .about-section {
+      padding: 100px 5%;
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(
+        135deg,
+        rgba(20, 10, 35, 0.85) 0%,
+        rgba(30, 16, 48, 0.75) 25%,
+        rgba(15, 25, 35, 0.80) 50%,
+        rgba(30, 16, 48, 0.75) 75%,
+        rgba(20, 10, 35, 0.85) 100%
+      );
+      border-top: 1px solid rgba(255, 215, 0, 0.2);
+      border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      box-shadow:
+        inset 0 0 150px rgba(139, 92, 246, 0.1),
+        inset 0 0 80px rgba(6, 182, 212, 0.05),
+        0 0 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .about-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 30%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 70%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .about-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-image {
+      flex: 0 0 420px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .about-logo-img {
+      width: 380px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow:
+        0 0 40px rgba(255, 215, 0, 0.3),
+        0 0 80px rgba(255, 215, 0, 0.15),
+        0 25px 50px rgba(0, 0, 0, 0.4);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .about-logo-img:hover {
+      transform: scale(1.03);
+      box-shadow:
+        0 0 60px rgba(255, 215, 0, 0.4),
+        0 0 100px rgba(255, 215, 0, 0.2),
+        0 30px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .about-image .hero-logo-svg {
+      width: 350px;
+      height: 350px;
+    }
+
+    .about-text {
+      flex: 1;
+      text-align: center;
+    }
+
+    .about-badge {
+      display: inline-block;
+      background: linear-gradient(90deg, var(--gold-light), var(--gold-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .about-text h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .about-features {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .about-feature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      min-width: 140px;
+    }
+
+    .feature-icon {
+      width: 35px;
+      height: 35px;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-title {
+      color: var(--gold-light);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .feature-sub {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 900px) {
+      .about-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      .about-text {
+        text-align: center;
+      }
+      .about-features {
+        justify-content: center;
+      }
+      .about-image {
+        flex: none;
+      }
+    }
+
+    /* Process Section */
+    /* Process Section - Alchemy Flow */
+    .process-section {
+      padding: 80px 5%;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .process-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .process-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      font-size: 1rem;
+    }
+
+    .process-flow {
+      position: relative;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+
+    /* The flowing connection line */
+    .flow-line {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      right: 5%;
+      height: 3px;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(139, 92, 246, 0.3) 10%,
+        rgba(255, 215, 0, 0.5) 50%,
+        rgba(139, 92, 246, 0.3) 90%,
+        transparent 100%
+      );
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+
+    .flow-line::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 0;
+      right: 0;
+      height: 7px;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 215, 0, 0.8),
+        transparent
+      );
+      animation: flowPulse 3s ease-in-out infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes flowPulse {
+      0% {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+    }
+
+    .process-steps {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      flex: 1;
+      max-width: 140px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .process-step:hover {
+      transform: translateY(-5px);
+    }
+
+    .step-node {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, rgba(30, 16, 48, 0.9), rgba(20, 10, 35, 0.95));
+      border: 2px solid rgba(255, 215, 0, 0.5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.8rem;
+      position: relative;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+    }
+
+    .process-step:hover .step-node {
+      border-color: var(--gold-light);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.2);
+      transform: scale(1.1);
+    }
+
+    .step-node::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-light), var(--purple-light));
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s ease;
+    }
+
+    .process-step:hover .step-node::before {
+      opacity: 0.3;
+    }
+
+    .step-icon {
+      font-size: 1.4rem;
+    }
+
+    .step-number-badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--black);
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .step-title {
+      color: var(--white);
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      transition: color 0.3s ease;
+    }
+
+    .process-step:hover .step-title {
+      color: var(--gold-light);
+    }
+
+    .step-desc {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      line-height: 1.4;
+      opacity: 0.8;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 900px) {
+      .process-flow {
+        padding: 1rem 0;
+      }
+
+      .flow-line {
+        display: none;
+      }
+
+      .process-steps {
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        justify-content: center;
+      }
+
+      .process-step {
+        flex: 0 0 calc(33% - 1rem);
+        min-width: 100px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .process-step {
+        flex: 0 0 calc(50% - 1rem);
+      }
+
+      .step-node {
+        width: 45px;
+        height: 45px;
+      }
+
+      .step-icon {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* FAQ Section */
+    .faq-section {
+      padding: 80px 5%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .faq-section h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .faq-subtitle {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+    }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .faq-question:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .faq-toggle {
+      color: var(--gold-light);
+      font-size: 1.5rem;
+      transition: transform 0.3s;
+    }
+
+    .faq-answer {
+      padding: 0 1.5rem 1.2rem;
+      color: var(--text-muted);
+      display: none;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .faq-item.open .faq-toggle {
+      transform: rotate(45deg);
+    }
+
+    /* Contact Section - Full Form */
+    .contact-section {
+      padding: 80px 5%;
+      background: linear-gradient(180deg, rgba(15, 10, 30, 0.95) 0%, rgba(20, 12, 35, 0.98) 100%);
+      border-top: 1px solid rgba(255, 215, 0, 0.15);
+    }
+
+    .contact-section h2 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: var(--white);
+    }
+
+    .contact-subtitle {
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-form {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-section-title {
+      color: var(--white);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      text-align: right;
+    }
+
+    .form-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .contact-input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: rgba(30, 20, 50, 0.6);
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: 0.95rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      text-align: right;
+      direction: rtl;
+    }
+
+    .contact-input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .contact-input:focus {
+      outline: none;
+      border-color: rgba(255, 215, 0, 0.5);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+    }
+
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: '▼';
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 0.7rem;
+      pointer-events: none;
+    }
+
+    .contact-select {
+      appearance: none;
+      cursor: pointer;
+      padding-left: 2.5rem;
+    }
+
+    .contact-select option {
+      background: #1a1030;
+      color: var(--white);
+    }
+
+    .contact-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-full-width {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .btn-gold-submit {
+      width: 100%;
+      padding: 1rem 2rem;
+      background: transparent;
+      border: 2px solid var(--gold-light);
+      border-radius: 30px;
+      color: var(--gold-light);
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-gold-submit:hover {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: var(--black);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-link:hover {
+      color: var(--gold-light);
+    }
+
+    .contact-link-icon {
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .contact-section h2 {
+        font-size: 1.8rem;
+      }
+
+      .contact-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+
+    /* CTA Section (legacy) */
+    .cta {
+      text-align: center;
+      background: transparent;
+    }
+
+    .cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-email {
+      color: var(--cyan);
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+        /* Footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 5% 2rem;
+      color: var(--text-muted);
+      background: linear-gradient(180deg, transparent, rgba(30, 16, 48, 0.5));
+      border-top: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .footer-logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--purple-dark);
+    }
+
+    .footer-logo-text {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+    }
+
+    .footer-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      background: rgba(139, 92, 246, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .footer-social a:hover {
+      background: var(--gold-light);
+      transform: translateY(-3px);
+    }
+
+    .footer-column h4 {
+      color: white;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      font-weight: 600;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-column a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column a:hover {
+      color: var(--gold-light);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(139, 92, 246, 0.15);
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom a {
+      color: var(--purple-light);
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .footer-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .footer-logo, .footer-social {
+        justify-content: center;
+      }
+    }
+
+    /* Navbar Language Buttons */
+    .nav-lang {
+      display: flex;
+      gap: 4px;
+      margin-left: 1rem;
+      margin-right: 1rem;
+    }
+
+    .nav-lang-btn {
+      padding: 6px 10px;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      border-radius: 6px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .nav-lang-btn:hover {
+      color: white;
+      border-color: var(--purple-light);
+    }
+
+    .nav-lang-btn.active {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: var(--purple-dark);
+      border-color: var(--gold-light);
+    }
+
+    /* WhatsApp Button */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      text-decoration: none;
+      z-index: 100;
+      box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      /* GOODIN Logo above title */
+    .hero-logo-top {
+      margin-bottom: 0.3rem;
+      text-align: center;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-logo-svg {
+      width: 150px;
+      height: 150px;
+      filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
+      animation: logoFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4)); }
+      50% { transform: translateY(-5px); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
+    }
+
+
+    .hero-logo {
+      margin-bottom: 1rem;
+    }
+
+    .hero-logo-g {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-gold);
+      border-radius: 50%;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--black);
+      filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)) drop-shadow(0 0 30px rgba(255, 165, 0, 0.4));
+      animation: logoGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes logoGlow {
+      0%, 100% { filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)); }
+      50% { filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.9)) drop-shadow(0 0 40px rgba(255, 165, 0, 0.6)); }
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .nav {
+        padding: 1rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      section {
+        padding: 60px 5%;
+      }
+
+      .pricing-card.featured {
+        transform: scale(1);
+      }
+
+      .vibe-title {
+        font-size: 2rem;
+      }
+
+      /* About section mobile */
+      .about-logo-img {
+        width: 280px;
+      }
+
+      .about-text h2 {
+        font-size: 1.8rem;
+      }
+
+      .about-text p {
+        font-size: 0.85rem;
+      }
+
+      .about-feature {
+        padding: 0.8rem 1rem;
+        min-width: 100px;
+      }
+
+      .feature-icon {
+        width: 28px;
+        height: 28px;
+      }
+
+      .feature-title {
+        font-size: 0.8rem;
+      }
+
+      .feature-sub {
+        font-size: 0.7rem;
+      }
+
+      /* Service cards mobile */
+      .service-card {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gears-canvas"></canvas>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="logo">
+      <svg class="nav-logo-svg" viewBox="0 0 500 500" width="40" height="40">
+        <defs>
+          <linearGradient id="navGold" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFE55C"/>
+            <stop offset="50%" stop-color="#F4C542"/>
+            <stop offset="100%" stop-color="#E8B923"/>
+          </linearGradient>
+          <filter id="navGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <circle cx="250" cy="250" r="95" fill="none" stroke="url(#navGold)" stroke-width="12" filter="url(#navGlow)"/>
+        <circle cx="250" cy="250" r="85" fill="#1a1208" fill-opacity="0.9"/>
+        <path d="M 289 210 A 55 55 0 1 0 305 255 L 250 255" fill="none" stroke="url(#navGold)" stroke-width="12" stroke-linecap="round" filter="url(#navGlow)"/>
+      </svg>
+      <span class="logo-text">AI GOODIN</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#services" data-i18n="navServices">שירותים</a></li>
+      <li><a href="#pricing" data-i18n="navPricing">מחירים</a></li>
+      <li><a href="#testimonials" data-i18n="navTestimonials">המלצות</a></li>
+    </ul>
+    <div class="nav-lang">
+      <button class="nav-lang-btn active" onclick="setLanguage('he')">HE</button>
+      <button class="nav-lang-btn" onclick="setLanguage('en')">EN</button>
+      <button class="nav-lang-btn" onclick="setLanguage('ru')">RU</button>
+    </div>
+    <a href="#contact" class="nav-cta" data-i18n="navCta">בואו נדבר</a>
+  </nav>
+
+  <!-- Hero Section -->
+  <!-- GOODIN Logo placed outside circuit-container -->
+  <section class="hero">
+    <!-- AI GOODIN Real Logo -->
+    <div class="hero-logo-top">
+      <svg class="hero-logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+        <defs>
+          <linearGradient id="heroGoldBright" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#FFE55C"/>
+            <stop offset="30%" stop-color="#F4C542"/>
+            <stop offset="100%" stop-color="#E8B923"/>
+          </linearGradient>
+          <radialGradient id="heroInnerGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a1208" stop-opacity="0.9"/>
+            <stop offset="100%" stop-color="#0d0903" stop-opacity="0.95"/>
+          </radialGradient>
+          <filter id="heroStrongGlow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="8" result="blur1"/>
+            <feGaussianBlur stdDeviation="15" result="blur2"/>
+            <feMerge><feMergeNode in="blur2"/><feMergeNode in="blur1"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="heroMediumGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <filter id="heroSubtleGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Outer diamond shape -->
+        <g opacity="0.4">
+          <path d="M250 35 L465 250 L250 465 L35 250 Z" fill="none" stroke="#C9A227" stroke-width="1"/>
+          <path d="M250 55 L445 250 L250 445 L55 250 Z" fill="none" stroke="#C9A227" stroke-width="0.5" opacity="0.5"/>
+        </g>
+        <!-- CIRCUIT TRACES - TOP -->
+        <g filter="url(#heroSubtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+          <path d="M250 155 L250 45"/><path d="M250 70 L250 55 L235 55 L235 40"/><path d="M250 70 L265 70 L265 40"/>
+          <circle cx="250" cy="45" r="3" fill="#F4C542"/><circle cx="235" cy="40" r="2.5" fill="#F4C542"/><circle cx="265" cy="40" r="2.5" fill="#F4C542"/>
+          <path d="M250 120 L220 120 L220 95 L190 95"/><path d="M220 95 L220 75 L200 75 L200 55"/><path d="M190 95 L190 75 L170 75"/><path d="M190 95 L175 95 L175 110 L155 110"/>
+          <circle cx="190" cy="95" r="2.5" fill="#F4C542"/><circle cx="200" cy="55" r="2" fill="#E8B923"/><circle cx="170" cy="75" r="2" fill="#E8B923"/><circle cx="155" cy="110" r="2.5" fill="#F4C542"/>
+          <path d="M220 120 L220 135 L195 135 L195 120"/><path d="M195 135 L180 135 L180 150"/><circle cx="195" cy="120" r="2" fill="#E8B923"/><circle cx="180" cy="150" r="2" fill="#E8B923"/>
+          <path d="M250 120 L280 120 L280 95 L310 95"/><path d="M280 95 L280 75 L300 75 L300 55"/><path d="M310 95 L310 75 L330 75"/><path d="M310 95 L325 95 L325 110 L345 110"/>
+          <circle cx="310" cy="95" r="2.5" fill="#F4C542"/><circle cx="300" cy="55" r="2" fill="#E8B923"/><circle cx="330" cy="75" r="2" fill="#E8B923"/><circle cx="345" cy="110" r="2.5" fill="#F4C542"/>
+          <path d="M280 120 L280 135 L305 135 L305 120"/><path d="M305 135 L320 135 L320 150"/><circle cx="305" cy="120" r="2" fill="#E8B923"/><circle cx="320" cy="150" r="2" fill="#E8B923"/>
+        </g>
+        <!-- CIRCUIT TRACES - BOTTOM -->
+        <g filter="url(#heroSubtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+          <path d="M250 345 L250 455"/><path d="M250 430 L250 445 L235 445 L235 460"/><path d="M250 430 L265 430 L265 460"/>
+          <circle cx="250" cy="455" r="3" fill="#F4C542"/><circle cx="235" cy="460" r="2.5" fill="#F4C542"/><circle cx="265" cy="460" r="2.5" fill="#F4C542"/>
+          <path d="M250 380 L220 380 L220 405 L190 405"/><path d="M220 405 L220 425 L200 425 L200 445"/><path d="M190 405 L190 425 L170 425"/><path d="M190 405 L175 405 L175 390 L155 390"/>
+          <circle cx="190" cy="405" r="2.5" fill="#F4C542"/><circle cx="200" cy="445" r="2" fill="#E8B923"/><circle cx="170" cy="425" r="2" fill="#E8B923"/><circle cx="155" cy="390" r="2.5" fill="#F4C542"/>
+          <path d="M220 380 L220 365 L195 365 L195 380"/><path d="M195 365 L180 365 L180 350"/><circle cx="195" cy="380" r="2" fill="#E8B923"/><circle cx="180" cy="350" r="2" fill="#E8B923"/>
+          <path d="M250 380 L280 380 L280 405 L310 405"/><path d="M280 405 L280 425 L300 425 L300 445"/><path d="M310 405 L310 425 L330 425"/><path d="M310 405 L325 405 L325 390 L345 390"/>
+          <circle cx="310" cy="405" r="2.5" fill="#F4C542"/><circle cx="300" cy="445" r="2" fill="#E8B923"/><circle cx="330" cy="425" r="2" fill="#E8B923"/><circle cx="345" cy="390" r="2.5" fill="#F4C542"/>
+          <path d="M280 380 L280 365 L305 365 L305 380"/><path d="M305 365 L320 365 L320 350"/><circle cx="305" cy="380" r="2" fill="#E8B923"/><circle cx="320" cy="350" r="2" fill="#E8B923"/>
+        </g>
+        <!-- CIRCUIT TRACES - LEFT -->
+        <g filter="url(#heroSubtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+          <path d="M155 250 L45 250"/><path d="M70 250 L55 250 L55 235 L40 235"/><path d="M70 250 L70 265 L40 265"/>
+          <circle cx="45" cy="250" r="3" fill="#F4C542"/><circle cx="40" cy="235" r="2.5" fill="#F4C542"/><circle cx="40" cy="265" r="2.5" fill="#F4C542"/>
+          <path d="M120 250 L120 220 L95 220 L95 190"/><path d="M95 220 L75 220 L75 200 L55 200"/><path d="M95 190 L75 190 L75 170"/><path d="M95 190 L95 175 L110 175 L110 155"/>
+          <circle cx="95" cy="190" r="2.5" fill="#F4C542"/><circle cx="55" cy="200" r="2" fill="#E8B923"/><circle cx="75" cy="170" r="2" fill="#E8B923"/><circle cx="110" cy="155" r="2.5" fill="#F4C542"/>
+          <path d="M120 250 L120 280 L95 280 L95 310"/><path d="M95 280 L75 280 L75 300 L55 300"/><path d="M95 310 L75 310 L75 330"/><path d="M95 310 L95 325 L110 325 L110 345"/>
+          <circle cx="95" cy="310" r="2.5" fill="#F4C542"/><circle cx="55" cy="300" r="2" fill="#E8B923"/><circle cx="75" cy="330" r="2" fill="#E8B923"/><circle cx="110" cy="345" r="2.5" fill="#F4C542"/>
+          <path d="M120 220 L135 220 L135 195"/><path d="M120 280 L135 280 L135 305"/><circle cx="135" cy="195" r="2" fill="#E8B923"/><circle cx="135" cy="305" r="2" fill="#E8B923"/>
+        </g>
+        <!-- CIRCUIT TRACES - RIGHT -->
+        <g filter="url(#heroSubtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+          <path d="M345 250 L455 250"/><path d="M430 250 L445 250 L445 235 L460 235"/><path d="M430 250 L430 265 L460 265"/>
+          <circle cx="455" cy="250" r="3" fill="#F4C542"/><circle cx="460" cy="235" r="2.5" fill="#F4C542"/><circle cx="460" cy="265" r="2.5" fill="#F4C542"/>
+          <path d="M380 250 L380 220 L405 220 L405 190"/><path d="M405 220 L425 220 L425 200 L445 200"/><path d="M405 190 L425 190 L425 170"/><path d="M405 190 L405 175 L390 175 L390 155"/>
+          <circle cx="405" cy="190" r="2.5" fill="#F4C542"/><circle cx="445" cy="200" r="2" fill="#E8B923"/><circle cx="425" cy="170" r="2" fill="#E8B923"/><circle cx="390" cy="155" r="2.5" fill="#F4C542"/>
+          <path d="M380 250 L380 280 L405 280 L405 310"/><path d="M405 280 L425 280 L425 300 L445 300"/><path d="M405 310 L425 310 L425 330"/><path d="M405 310 L405 325 L390 325 L390 345"/>
+          <circle cx="405" cy="310" r="2.5" fill="#F4C542"/><circle cx="445" cy="300" r="2" fill="#E8B923"/><circle cx="425" cy="330" r="2" fill="#E8B923"/><circle cx="390" cy="345" r="2.5" fill="#F4C542"/>
+          <path d="M380 220 L365 220 L365 195"/><path d="M380 280 L365 280 L365 305"/><circle cx="365" cy="195" r="2" fill="#E8B923"/><circle cx="365" cy="305" r="2" fill="#E8B923"/>
+        </g>
+        <!-- DIAGONAL CIRCUITS -->
+        <g filter="url(#heroSubtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+          <path d="M175 175 L140 140 L110 110"/><path d="M140 140 L125 140 L110 125"/><path d="M140 140 L140 125 L125 110"/><path d="M125 140 L125 155 L110 155"/>
+          <circle cx="110" cy="110" r="2.5" fill="#F4C542"/><circle cx="110" cy="125" r="2" fill="#E8B923"/><circle cx="125" cy="110" r="2" fill="#E8B923"/><circle cx="110" cy="155" r="2" fill="#E8B923"/>
+          <path d="M325 175 L360 140 L390 110"/><path d="M360 140 L375 140 L390 125"/><path d="M360 140 L360 125 L375 110"/><path d="M375 140 L375 155 L390 155"/>
+          <circle cx="390" cy="110" r="2.5" fill="#F4C542"/><circle cx="390" cy="125" r="2" fill="#E8B923"/><circle cx="375" cy="110" r="2" fill="#E8B923"/><circle cx="390" cy="155" r="2" fill="#E8B923"/>
+          <path d="M175 325 L140 360 L110 390"/><path d="M140 360 L125 360 L110 375"/><path d="M140 360 L140 375 L125 390"/><path d="M125 360 L125 345 L110 345"/>
+          <circle cx="110" cy="390" r="2.5" fill="#F4C542"/><circle cx="110" cy="375" r="2" fill="#E8B923"/><circle cx="125" cy="390" r="2" fill="#E8B923"/><circle cx="110" cy="345" r="2" fill="#E8B923"/>
+          <path d="M325 325 L360 360 L390 390"/><path d="M360 360 L375 360 L390 375"/><path d="M360 360 L360 375 L375 390"/><path d="M375 360 L375 345 L390 345"/>
+          <circle cx="390" cy="390" r="2.5" fill="#F4C542"/><circle cx="390" cy="375" r="2" fill="#E8B923"/><circle cx="375" cy="390" r="2" fill="#E8B923"/><circle cx="390" cy="345" r="2" fill="#E8B923"/>
+        </g>
+        <!-- Decorative arcs -->
+        <g filter="url(#heroMediumGlow)" opacity="0.6">
+          <path d="M160 180 A100 100 0 0 1 180 160" fill="none" stroke="#C9A227" stroke-width="1"/>
+          <path d="M340 180 A100 100 0 0 0 320 160" fill="none" stroke="#C9A227" stroke-width="1"/>
+          <path d="M160 320 A100 100 0 0 0 180 340" fill="none" stroke="#C9A227" stroke-width="1"/>
+          <path d="M340 320 A100 100 0 0 1 320 340" fill="none" stroke="#C9A227" stroke-width="1"/>
+        </g>
+        <!-- Main golden ring -->
+        <circle cx="250" cy="250" r="95" fill="none" stroke="url(#heroGoldBright)" stroke-width="8" filter="url(#heroStrongGlow)"/>
+        <!-- Inner glow fill -->
+        <circle cx="250" cy="250" r="90" fill="url(#heroInnerGlow)"/>
+        <!-- The G letter -->
+        <g filter="url(#heroStrongGlow)">
+          <path d="M 289 210 A 55 55 0 1 0 305 255 L 250 255" fill="none" stroke="url(#heroGoldBright)" stroke-width="8" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+    <div class="title-wrapper">
+      <div class="circuit-container">
+        <!-- Left circuit board group -->
+        <svg class="circuit-svg left" viewBox="0 0 250 140" preserveAspectRatio="xMaxYMid meet">
+          <defs>
+            <linearGradient id="goldGradL" x1="100%" y1="0%" x2="0%" y2="0%">
+              <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+              <stop offset="70%" style="stop-color:#FFA500;stop-opacity:0.8" />
+              <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:0" />
+            </linearGradient>
+          </defs>
+          <!-- Main horizontal traces -->
+          <path class="circuit-path" d="M250,70 L200,70 L190,70 L180,55 L140,55 L130,70 L100,70 L90,85 L50,85 L40,70 L0,70" />
+          <path class="circuit-path d1" d="M250,50 L210,50 L200,35 L160,35 L150,50 L120,50 L110,35 L70,35 L60,50 L20,50" />
+          <path class="circuit-path d2" d="M250,90 L210,90 L200,105 L160,105 L150,90 L120,90 L110,105 L70,105 L60,90 L20,90" />
+          <!-- Vertical connectors -->
+          <path class="circuit-path d3" d="M180,55 L180,35" />
+          <path class="circuit-path d3" d="M130,70 L130,90" />
+          <path class="circuit-path d4" d="M90,85 L90,105" />
+          <path class="circuit-path d4" d="M150,50 L150,70" />
+          <!-- Branch traces -->
+          <path class="circuit-path d5" d="M250,30 L220,30 L210,20 L170,20" />
+          <path class="circuit-path d5" d="M250,110 L220,110 L210,120 L170,120" />
+          <path class="circuit-path d6" d="M100,70 L100,55 L80,55 L80,35" />
+          <path class="circuit-path d6" d="M40,70 L40,90 L60,90 L60,105" />
+          <!-- Junction dots -->
+          <circle class="circuit-dot" cx="200" cy="70" r="2" />
+          <circle class="circuit-dot d1" cx="180" cy="55" r="1.5" />
+          <circle class="circuit-dot d2" cx="150" cy="50" r="1.5" />
+          <circle class="circuit-dot d3" cx="130" cy="70" r="1.5" />
+          <circle class="circuit-dot d3" cx="130" cy="90" r="1.5" />
+          <circle class="circuit-dot d4" cx="100" cy="70" r="1.5" />
+          <circle class="circuit-dot d5" cx="90" cy="85" r="1.5" />
+          <circle class="circuit-dot d5" cx="90" cy="105" r="1.5" />
+          <circle class="circuit-dot d6" cx="40" cy="70" r="1.5" />
+          <circle class="circuit-dot d6" cx="80" cy="35" r="1.5" />
+          <circle class="circuit-dot d2" cx="210" cy="50" r="1.5" />
+          <circle class="circuit-dot d2" cx="210" cy="90" r="1.5" />
+        </svg>
+        
+
+        <h1 data-i18n="heroTitle">Future Meets Creativity</h1>
+        
+        <!-- Right circuit board group (mirrored) -->
+        <svg class="circuit-svg right" viewBox="0 0 250 140" preserveAspectRatio="xMinYMid meet">
+          <defs>
+            <linearGradient id="goldGradR" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+              <stop offset="70%" style="stop-color:#FFA500;stop-opacity:0.8" />
+              <stop offset="100%" style="stop-color:#FF8C00;stop-opacity:0" />
+            </linearGradient>
+          </defs>
+          <!-- Main horizontal traces -->
+          <path class="circuit-path" d="M0,70 L50,70 L60,70 L70,55 L110,55 L120,70 L150,70 L160,85 L200,85 L210,70 L250,70" />
+          <path class="circuit-path d1" d="M0,50 L40,50 L50,35 L90,35 L100,50 L130,50 L140,35 L180,35 L190,50 L230,50" />
+          <path class="circuit-path d2" d="M0,90 L40,90 L50,105 L90,105 L100,90 L130,90 L140,105 L180,105 L190,90 L230,90" />
+          <!-- Vertical connectors -->
+          <path class="circuit-path d3" d="M70,55 L70,35" />
+          <path class="circuit-path d3" d="M120,70 L120,90" />
+          <path class="circuit-path d4" d="M160,85 L160,105" />
+          <path class="circuit-path d4" d="M100,50 L100,70" />
+          <!-- Branch traces -->
+          <path class="circuit-path d5" d="M0,30 L30,30 L40,20 L80,20" />
+          <path class="circuit-path d5" d="M0,110 L30,110 L40,120 L80,120" />
+          <path class="circuit-path d6" d="M150,70 L150,55 L170,55 L170,35" />
+          <path class="circuit-path d6" d="M210,70 L210,90 L190,90 L190,105" />
+          <!-- Junction dots -->
+          <circle class="circuit-dot" cx="50" cy="70" r="2" />
+          <circle class="circuit-dot d1" cx="70" cy="55" r="1.5" />
+          <circle class="circuit-dot d2" cx="100" cy="50" r="1.5" />
+          <circle class="circuit-dot d3" cx="120" cy="70" r="1.5" />
+          <circle class="circuit-dot d3" cx="120" cy="90" r="1.5" />
+          <circle class="circuit-dot d4" cx="150" cy="70" r="1.5" />
+          <circle class="circuit-dot d5" cx="160" cy="85" r="1.5" />
+          <circle class="circuit-dot d5" cx="160" cy="105" r="1.5" />
+          <circle class="circuit-dot d6" cx="210" cy="70" r="1.5" />
+          <circle class="circuit-dot d6" cx="170" cy="35" r="1.5" />
+          <circle class="circuit-dot d2" cx="40" cy="50" r="1.5" />
+          <circle class="circuit-dot d2" cx="40" cy="90" r="1.5" />
+        </svg>
+      </div>
+    </div>
+    <p class="hero-subtitle" data-i18n="heroSubtitle">סטודיו דיגיטלי שהופך רעיונות למציאות. טכנולוגיה, עיצוב ויצירתיות - הכל במקום אחד.</p>
+    <p class="hero-services" data-i18n="heroTags">עיצוב | דפי נחיתה | אוטומציות | משחקים</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary" data-i18n="heroBtn1">בואו נדבר על הפרויקט שלכם</a>
+      <a href="#services" class="btn-secondary" data-i18n="heroBtn2">לשירותים</a>
+    </div>
+  </section>
+
+  <!-- About Section - Digital Alchemy -->
+  <section class="about-section" id="about">
+    <div class="about-content">
+      <!-- Logo Image - REAL PNG -->
+      <div class="about-image">
+        <img src="LOGO AI GOODIN.png" alt="AI GOODIN Logo" class="about-logo-img">
+      </div>
+      <!-- Text Content -->
+      <div class="about-text">
+        <span class="about-badge">DIGITAL ALCHEMY</span>
+        <h2 data-i18n="aboutTitle">אודות GOODIN</h2>
+        <p data-i18n="aboutP1">אנחנו סטודיו דיגיטלי שמאמין שטכנולוגיה צריכה להרגיש קסומה. עם שנים של ניסיון ב-IT, פיתוח ו-AI, אנחנו יוצרים פתרונות דיגיטליים שעובדים לאנשים אמיתיים.</p>
+        <p data-i18n="aboutP2">הגישה שלנו של "Vibe Coding" אומרת שאנחנו לא רק בונים פיצ'רים - אנחנו יוצרים חוויות. כל פרויקט מלא ביצירתיות, תשומת לב לפרטים והבנה עמוקה של מה שגורם למוצרים דיגיטליים להרגיש נכון.</p>
+        <div class="about-features">
+          <div class="about-feature">
+            <svg class="feature-icon" viewBox="0 0 100 100">
+              <defs>
+                <linearGradient id="iconG1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#FFD700"/>
+                  <stop offset="100%" stop-color="#FF8C00"/>
+                </linearGradient>
+                <filter id="bulbGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="3" result="glow"/>
+                  <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
+                </filter>
+              </defs>
+              <!-- Lightbulb -->
+              <ellipse cx="50" cy="40" rx="22" ry="25" fill="none" stroke="url(#iconG1)" stroke-width="3" filter="url(#bulbGlow)"/>
+              <rect x="42" y="62" width="16" height="8" rx="2" fill="#FFD700"/>
+              <rect x="44" y="70" width="12" height="3" rx="1" fill="#FFA500"/>
+              <path d="M44 75 L50 82 L56 75" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round"/>
+              <!-- Sparkles bursting out -->
+              <circle cx="50" cy="25" r="3" fill="#FFD700"/>
+              <path d="M50 10 L50 18" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round"/>
+              <path d="M30 25 L22 20" stroke="#06B6D4" stroke-width="2" stroke-linecap="round"/>
+              <path d="M70 25 L78 20" stroke="#06B6D4" stroke-width="2" stroke-linecap="round"/>
+              <path d="M25 45 L15 45" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/>
+              <path d="M75 45 L85 45" stroke="#FF6B6B" stroke-width="2" stroke-linecap="round"/>
+              <!-- Small sparkle dots -->
+              <circle cx="20" cy="30" r="2" fill="#8B5CF6"/>
+              <circle cx="80" cy="30" r="2" fill="#8B5CF6"/>
+              <circle cx="35" cy="15" r="1.5" fill="#FFD700"/>
+              <circle cx="65" cy="15" r="1.5" fill="#FFD700"/>
+            </svg>
+            <span class="feature-title">Creative</span>
+            <span class="feature-sub">Solutions</span>
+          </div>
+          <div class="about-feature">
+            <svg class="feature-icon" viewBox="0 0 100 100">
+              <defs><linearGradient id="iconG2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFD700"/><stop offset="100%" stop-color="#FF6B6B"/></linearGradient></defs>
+              <path d="M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z" fill="none" stroke="url(#iconG2)" stroke-width="2"/>
+              <circle cx="50" cy="50" r="10" fill="#FFD700"/>
+              <circle cx="30" cy="30" r="4" fill="#FF6B6B"/>
+              <circle cx="70" cy="30" r="4" fill="#FF6B6B"/>
+              <circle cx="30" cy="70" r="4" fill="#FF6B6B"/>
+              <circle cx="70" cy="70" r="4" fill="#FF6B6B"/>
+            </svg>
+            <span class="feature-title">Human</span>
+            <span class="feature-sub">Touch</span>
+          </div>
+          <div class="about-feature">
+            <svg class="feature-icon" viewBox="0 0 100 100">
+              <defs><linearGradient id="iconG3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#06B6D4"/><stop offset="100%" stop-color="#8B5CF6"/></linearGradient></defs>
+              <ellipse cx="50" cy="50" rx="30" ry="15" fill="none" stroke="url(#iconG3)" stroke-width="2" transform="rotate(-30 50 50)"/>
+              <ellipse cx="50" cy="50" rx="30" ry="15" fill="none" stroke="url(#iconG3)" stroke-width="2" transform="rotate(30 50 50)"/>
+              <ellipse cx="50" cy="50" rx="30" ry="15" fill="none" stroke="url(#iconG3)" stroke-width="2" transform="rotate(90 50 50)"/>
+              <circle cx="50" cy="50" r="8" fill="#FFD700"/>
+            </svg>
+            <span class="feature-title">AI-First</span>
+            <span class="feature-sub">Approach</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="golden-divider"></div>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="section-title">
+      <h2 data-i18n="servicesTitle">הכירו את השירותים שלנו</h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 100 100" width="64" height="64"><defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE55C"/><stop offset="100%" stop-color="#E8B923"/></linearGradient></defs><circle cx="50" cy="35" r="18" fill="none" stroke="url(#g1)" stroke-width="3"/><rect x="32" y="55" width="36" height="28" rx="5" fill="none" stroke="url(#g1)" stroke-width="3"/><circle cx="42" cy="32" r="4" fill="#F4C542"/><circle cx="58" cy="32" r="4" fill="#F4C542"/><line x1="22" y1="65" x2="32" y2="65" stroke="url(#g1)" stroke-width="2"/><line x1="68" y1="65" x2="78" y2="65" stroke="url(#g1)" stroke-width="2"/></svg></div>
+        <h3 data-i18n="svc1Title">אוטומציות חכמות</h3>
+        <p data-i18n="svc1Desc">תהליכים שרצים לבד - בלי שתצטרכו לחשוב עליהם. בוטים, תזכורות, סנכרון מערכות, ועוד.</p>
+        <div class="service-price" data-i18n="svc1Price">החל מ-₪800</div>
+        <a href="#contact" class="service-btn" data-i18n="svcBtnStart">בואו נתחיל</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 100 100" width="64" height="64"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE55C"/><stop offset="100%" stop-color="#E8B923"/></linearGradient></defs><rect x="15" y="20" width="70" height="45" rx="3" fill="none" stroke="url(#g2)" stroke-width="3"/><line x1="15" y1="55" x2="85" y2="55" stroke="url(#g2)" stroke-width="2"/><path d="M30 70 L40 65 L60 65 L70 70" fill="none" stroke="url(#g2)" stroke-width="3"/><text x="50" y="45" text-anchor="middle" fill="#F4C542" font-size="16" font-family="monospace">&lt;/&gt;</text></svg></div>
+        <h3 data-i18n="svc2Title">Vibe Coding</h3>
+        <p data-i18n="svc2Desc">דפי נחיתה וחוויות דיגיטליות שמרגישות נכון. לעסקים, ליוצרים, ולכל מי שרוצה נוכחות אונליין.</p>
+        <div class="service-price" data-i18n="svc2Price">החל מ-₪1,500</div>
+        <a href="#contact" class="service-btn" data-i18n="svcBtnStart">בואו נתחיל</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 100 100" width="64" height="64"><defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE55C"/><stop offset="100%" stop-color="#E8B923"/></linearGradient></defs><rect x="15" y="30" width="70" height="40" rx="20" fill="none" stroke="url(#g3)" stroke-width="3"/><circle cx="35" cy="50" r="8" fill="none" stroke="url(#g3)" stroke-width="2"/><line x1="35" y1="44" x2="35" y2="56" stroke="url(#g3)" stroke-width="2"/><line x1="29" y1="50" x2="41" y2="50" stroke="url(#g3)" stroke-width="2"/><circle cx="60" cy="45" r="4" fill="#F4C542"/><circle cx="70" cy="50" r="4" fill="#F4C542"/><circle cx="60" cy="55" r="4" fill="#F4C542"/></svg></div>
+        <h3 data-i18n="svc3Title">משחקים דיגיטליים</h3>
+        <p data-i18n="svc3Desc">משחקים שמעבירים מסר, מלמדים ונשארים בזיכרון. לאירועים, לשיווק, לחינוך.</p>
+        <div class="service-price" data-i18n="svc3Price">החל מ-₪2,000</div>
+        <a href="#contact" class="service-btn" data-i18n="svcBtnProjects">לצפייה בפרויקטים</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 100 100" width="64" height="64"><defs><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE55C"/><stop offset="100%" stop-color="#E8B923"/></linearGradient></defs><path d="M50 15 L55 40 L80 50 L55 60 L50 85 L45 60 L20 50 L45 40 Z" fill="none" stroke="url(#g4)" stroke-width="2"/><circle cx="50" cy="50" r="8" fill="#F4C542"/><circle cx="25" cy="25" r="3" fill="#E8B923"/><circle cx="75" cy="25" r="3" fill="#E8B923"/><circle cx="25" cy="75" r="3" fill="#E8B923"/><circle cx="75" cy="75" r="3" fill="#E8B923"/></svg></div>
+        <h3 data-i18n="svc4Title">חוויות דיגיטליות</h3>
+        <p data-i18n="svc4Desc">הזמנות אינטראקטיביות, כרטיסי ברכה, מצגות חיות. כל מה שהופך רגע רגיל למיוחד.</p>
+        <div class="service-price" data-i18n="svc4Price">לפי פרויקט</div>
+        <a href="#contact" class="service-btn" data-i18n="svcBtnTalk">דברו איתנו</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 100 100" width="64" height="64"><defs><linearGradient id="g5" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE55C"/><stop offset="100%" stop-color="#E8B923"/></linearGradient></defs><ellipse cx="50" cy="50" rx="35" ry="30" fill="none" stroke="url(#g5)" stroke-width="3"/><circle cx="35" cy="40" r="5" fill="#F4C542"/><circle cx="50" cy="35" r="5" fill="#E8B923"/><circle cx="65" cy="40" r="5" fill="#F4C542"/><circle cx="40" cy="55" r="5" fill="#E8B923"/><ellipse cx="70" cy="60" rx="8" ry="12" fill="none" stroke="url(#g5)" stroke-width="2"/></svg></div>
+        <h3 data-i18n="svc5Title">עיצוב לוגו</h3>
+        <p data-i18n="svc5Desc">זהות ויזואלית שמדברת בשבילכם. לוגו מקצועי שמתאים בדיוק למותג שלכם.</p>
+        <div class="service-price" data-i18n="svc5Price">החל מ-₪500</div>
+        <a href="#contact" class="service-btn" data-i18n="svcBtnStart">בואו נתחיל</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 100 100" width="64" height="64"><defs><linearGradient id="g6" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE55C"/><stop offset="100%" stop-color="#E8B923"/></linearGradient></defs><polygon points="50,20 85,40 50,60 15,40" fill="none" stroke="url(#g6)" stroke-width="3"/><line x1="50" y1="60" x2="50" y2="80" stroke="url(#g6)" stroke-width="2"/><path d="M25 45 L25 65 Q50 80 75 65 L75 45" fill="none" stroke="url(#g6)" stroke-width="2"/><circle cx="50" cy="40" r="5" fill="#F4C542"/></svg></div>
+        <h3 data-i18n="svc6Title">הדרכת Claude Code</h3>
+        <p data-i18n="svc6Desc">הפכו AI לשותף עבודה - הדרכה מעשית לעסקים ויחידים.</p>
+        <div class="service-price" data-i18n="svc6Price">החל מ-₪250</div>
+        <a href="#contact" class="service-btn" data-i18n="svcBtnDetails">לפרטים</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><svg viewBox="0 0 100 100" width="64" height="64"><defs><linearGradient id="g7" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#FFE55C"/><stop offset="100%" stop-color="#E8B923"/></linearGradient></defs><rect x="25" y="20" width="50" height="35" rx="3" fill="none" stroke="url(#g7)" stroke-width="3"/><rect x="35" y="55" width="30" height="5" fill="url(#g7)"/><rect x="40" y="60" width="20" height="15" fill="none" stroke="url(#g7)" stroke-width="2"/><circle cx="40" cy="35" r="3" fill="#F4C542"/><circle cx="50" cy="35" r="3" fill="#F4C542"/><circle cx="60" cy="35" r="3" fill="#F4C542"/><line x1="30" y1="45" x2="70" y2="45" stroke="url(#g7)" stroke-width="1"/></svg></div>
+        <h3 data-i18n="svc7Title">שירותי IT</h3>
+        <p data-i18n="svc7Desc">עזרה עם מחשבים, תוכנות והגדרות. תמיכה טכנית אישית ומקצועית.</p>
+        <div class="service-price" data-i18n="svc7Price">החל מ-₪150/שעה</div>
+        <a href="#contact" class="service-btn" data-i18n="svcBtnDetails">לפרטים</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vibe Coding Section -->
+  <section class="vibe-coding">
+    <h2 class="vibe-title">VIBE CODING</h2>
+    <p class="vibe-description" data-i18n="vibeDesc">
+      בניית דפי נחיתה וחוויות אינטראקטיביות שמתרגמות את השפה של המותג לוייב דיגיטלי ברור.
+      תכנון מסלולי משתמש שמובילים משלב הסקרנות לפעולה – בלי להרגיש "מכירתיים מדי".
+    </p>
+    <a href="#contact" class="btn-primary" data-i18n="vibeBtn">רוצה לדעת עוד?</a>
+  </section>
+
+  <!-- Portfolio Section - Selected Works -->
+  <section class="portfolio-section" id="portfolio">
+    <div class="portfolio-header">
+      <h2 data-i18n="portfolioTitle">עבודות נבחרות</h2>
+      <p data-i18n="portfolioDesc">פרויקטים אחרונים שאנחנו גאים בהם</p>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="portfolio-image">
+          <div class="portfolio-mockup">
+            <div class="mockup-bar"></div>
+            <div class="mockup-content"></div>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <h3 data-i18n="proj1">דף נחיתה לסטארטאפ</h3>
+          <span class="portfolio-category">Vibe Coding</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-image purple">
+          <div class="portfolio-mockup">
+            <div class="mockup-bar"></div>
+            <div class="mockup-content"></div>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <h3 data-i18n="proj2">משחק חינוכי לילדים</h3>
+          <span class="portfolio-category">Games</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-image cyan">
+          <div class="portfolio-mockup">
+            <div class="mockup-bar"></div>
+            <div class="mockup-content"></div>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <h3 data-i18n="proj3">אתר תדמית לעסק</h3>
+          <span class="portfolio-category">Websites</span>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-image gold">
+          <div class="portfolio-mockup redesign-mockup">
+            <div class="mockup-bar"></div>
+            <div class="mockup-content">
+              <div class="before-after-icon">🔄</div>
+            </div>
+          </div>
+        </div>
+        <div class="portfolio-info">
+          <h3 data-i18n="proj4">שדרוג דף לעסק מקומי</h3>
+          <span class="portfolio-category redesign-category">Redesign</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Redesign Promo Section -->
+  <section class="redesign-promo-section" id="redesign-promo">
+    <div class="redesign-promo-container">
+      <div class="promo-content">
+        <div class="promo-badge" data-i18n="promoNew">שירות חדש!</div>
+        <h2 data-i18n="promoTitle">יש לך דף נחיתה ישן?<br><span class="gold-text">נהפוך אותו לזהב</span></h2>
+        <p class="promo-desc" data-i18n="promoDesc">שדרוג מקצועי של דפי נחיתה קיימים - מ-₪800 בלבד. עיצוב חדש, ביצועים משופרים, יותר לידים.</p>
+        <ul class="promo-benefits">
+          <li data-i18n="promoBenefit1">✓ ניתוח מקצועי של הדף הקיים</li>
+          <li data-i18n="promoBenefit2">✓ עיצוב מודרני ומותאם למותג</li>
+          <li data-i18n="promoBenefit3">✓ אופטימיזציה לנייד ולמהירות</li>
+          <li data-i18n="promoBenefit4">✓ תהליך פשוט ומהיר</li>
+        </ul>
+        <a href="https://redesign.goodin.studio" class="promo-cta-btn" target="_blank" data-i18n="promoCta">שדרג את הדף שלך עכשיו</a>
+      </div>
+      <div class="promo-demo">
+        <div class="demo-window">
+          <div class="demo-header">
+            <span class="demo-dot red"></span>
+            <span class="demo-dot yellow"></span>
+            <span class="demo-dot green"></span>
+          </div>
+          <div class="demo-content">
+            <div class="demo-before-after">
+              <div class="demo-side before">
+                <span class="demo-label" data-i18n="demoBefore">לפני</span>
+                <div class="demo-page old">
+                  <div class="demo-bar"></div>
+                  <div class="demo-block"></div>
+                  <div class="demo-block small"></div>
+                </div>
+              </div>
+              <div class="demo-arrow">→</div>
+              <div class="demo-side after">
+                <span class="demo-label" data-i18n="demoAfter">אחרי</span>
+                <div class="demo-page new">
+                  <div class="demo-bar gold"></div>
+                  <div class="demo-block gold"></div>
+                  <div class="demo-block small gold"></div>
+                </div>
+              </div>
+            </div>
+            <p class="demo-placeholder" data-i18n="demoPlaceholder">סרטון הדגמה בקרוב</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section - Accordion Style -->
+  <section class="pricing-accordion-section" id="pricing">
+    <div class="section-title">
+      <h2 data-i18n="pricingTitle">מחירון שירותים</h2>
+      <p data-i18n="pricingDesc">מחירים שקופים, בלי הפתעות</p>
+    </div>
+
+    <div class="pricing-accordions">
+      <!-- Landing Pages -->
+      <div class="pricing-accordion-item" data-category="landing">
+        <button class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">💻</span>
+            <span data-i18n="pricingLanding">דפי נחיתה</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierBasic">בסיסי</h4>
+              <div class="tier-price">₪1,500</div>
+              <ul class="tier-features">
+                <li data-i18n="landingF1">דף נחיתה אחד</li>
+                <li data-i18n="landingF2">עיצוב מותאם</li>
+                <li data-i18n="landingF3">טופס יצירת קשר</li>
+                <li data-i18n="landingF4">תמיכה לחודש</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierAdvanced">מתקדם</h4>
+              <div class="tier-price">₪2,500</div>
+              <ul class="tier-features">
+                <li data-i18n="landingF5">עד 3 עמודים</li>
+                <li data-i18n="landingF6">אנימציות</li>
+                <li data-i18n="landingF7">SEO בסיסי</li>
+                <li data-i18n="landingF8">תמיכה ל-2 חודשים</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card">
+              <h4 data-i18n="tierPremium">פרימיום</h4>
+              <div class="tier-price">₪4,000</div>
+              <ul class="tier-features">
+                <li data-i18n="landingF9">עד 5 עמודים</li>
+                <li data-i18n="landingF10">אנימציות מתקדמות</li>
+                <li data-i18n="landingF11">SEO מלא</li>
+                <li data-i18n="landingF12">תמיכה ל-3 חודשים</li>
+                <li data-i18n="landingF13">אינטגרציות</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Landing Page Redesign - NEW SERVICE! -->
+      <div class="pricing-accordion-item featured-service" data-category="redesign">
+        <button class="accordion-header redesign-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">🔄</span>
+            <span class="service-title" data-i18n="pricingRedesign">שדרוג דף נחיתה</span>
+            <span class="new-badge" data-i18n="newBadge">חדש!</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="redesign-intro">
+            <p data-i18n="redesignIntro">יש לך דף נחיתה ישן? נהפוך אותו לזהב דיגיטלי!</p>
+          </div>
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierQuickRefresh">Quick Refresh</h4>
+              <div class="tier-price">₪800</div>
+              <ul class="tier-features">
+                <li data-i18n="redesignF1">עדכון צבעים וטיפוגרפיה</li>
+                <li data-i18n="redesignF2">שדרוג כפתורי CTA</li>
+                <li data-i18n="redesignF3">אופטימיזציה למובייל</li>
+                <li data-i18n="redesignF4">שיפורי קריאות</li>
+              </ul>
+              <p class="tier-time" data-i18n="redesignTime1">3-5 ימי עסקים</p>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierFullRedesign">Full Redesign</h4>
+              <div class="tier-price">₪1,500</div>
+              <ul class="tier-features">
+                <li data-i18n="redesignF5">בנייה מחדש מלאה</li>
+                <li data-i18n="redesignF6">עיצוב מותאם אישית</li>
+                <li data-i18n="redesignF7">תמונות ואייקונים חדשים</li>
+                <li data-i18n="redesignF8">אנימציות</li>
+                <li data-i18n="redesignF9">רספונסיבי מלא</li>
+              </ul>
+              <p class="tier-time" data-i18n="redesignTime2">7-10 ימי עסקים</p>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card">
+              <h4 data-i18n="tierPlusRedesign">Plus+</h4>
+              <div class="tier-price">₪2,500+</div>
+              <ul class="tier-features">
+                <li data-i18n="redesignF10">הכל מ-Full Redesign</li>
+                <li data-i18n="redesignF11">כתיבת תוכן שיווקי</li>
+                <li data-i18n="redesignF12">אופטימיזציית SEO</li>
+                <li data-i18n="redesignF13">אינטגרציה עם Analytics</li>
+                <li data-i18n="redesignF14">ליווי לאחר השקה</li>
+              </ul>
+              <p class="tier-time" data-i18n="redesignTime3">14-21 ימי עסקים</p>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Full Websites -->
+      <div class="pricing-accordion-item" data-category="websites">
+        <button class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">🌐</span>
+            <span data-i18n="pricingWebsites">אתרים מלאים</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierBusiness">עסקי</h4>
+              <div class="tier-price">₪5,000</div>
+              <ul class="tier-features">
+                <li data-i18n="websiteF1">עד 10 עמודים</li>
+                <li data-i18n="websiteF2">מערכת ניהול תוכן</li>
+                <li data-i18n="websiteF3">עיצוב פרימיום</li>
+                <li data-i18n="websiteF4">SEO מלא</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierAdvanced">מתקדם</h4>
+              <div class="tier-price">₪8,000</div>
+              <ul class="tier-features">
+                <li data-i18n="websiteF5">עמודים ללא הגבלה</li>
+                <li data-i18n="websiteF6">בלוג</li>
+                <li data-i18n="websiteF7">אינטגרציות</li>
+                <li data-i18n="websiteF8">תמיכה שנתית</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card">
+              <h4 data-i18n="tierEnterprise">אנטרפרייז</h4>
+              <div class="tier-price">₪15,000+</div>
+              <ul class="tier-features">
+                <li data-i18n="websiteF9">פתרון מותאם אישית</li>
+                <li data-i18n="websiteF10">אפליקציה ייעודית</li>
+                <li data-i18n="websiteF11">API מותאם</li>
+                <li data-i18n="websiteF12">תמיכה ייעודית</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Automations -->
+      <div class="pricing-accordion-item" data-category="automations">
+        <button class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">🤖</span>
+            <span data-i18n="pricingAutomations">אוטומציות ובוטים</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierBasic">בסיסי</h4>
+              <div class="tier-price">₪800</div>
+              <ul class="tier-features">
+                <li data-i18n="autoF1">אוטומציה אחת</li>
+                <li data-i18n="autoF2">הגדרה ובדיקות</li>
+                <li data-i18n="autoF3">תיעוד</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierWhatsApp">בוט WhatsApp</h4>
+              <div class="tier-price">₪2,000</div>
+              <ul class="tier-features">
+                <li data-i18n="autoF4">בוט מותאם</li>
+                <li data-i18n="autoF5">תגובות אוטומטיות</li>
+                <li data-i18n="autoF6">תפריט אינטראקטיבי</li>
+                <li data-i18n="autoF7">תמיכה לחודש</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card">
+              <h4 data-i18n="tierFullSystem">מערכת מלאה</h4>
+              <div class="tier-price">₪5,000+</div>
+              <ul class="tier-features">
+                <li data-i18n="autoF8">אוטומציות מרובות</li>
+                <li data-i18n="autoF9">אינטגרציות CRM</li>
+                <li data-i18n="autoF10">דוחות</li>
+                <li data-i18n="autoF11">תמיכה שנתית</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital Games -->
+      <div class="pricing-accordion-item" data-category="games">
+        <button class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">🎮</span>
+            <span data-i18n="pricingGames">משחקים דיגיטליים</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierSimpleGame">משחק פשוט</h4>
+              <div class="tier-price">₪2,000</div>
+              <ul class="tier-features">
+                <li data-i18n="gameF1">משחק בסיסי</li>
+                <li data-i18n="gameF2">עיצוב מותאם</li>
+                <li data-i18n="gameF3">מובייל ודסקטופ</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierCustomGame">משחק מותאם</h4>
+              <div class="tier-price">₪4,500</div>
+              <ul class="tier-features">
+                <li data-i18n="gameF4">מנגנוני משחק מתקדמים</li>
+                <li data-i18n="gameF5">שמירת התקדמות</li>
+                <li data-i18n="gameF6">אפקטים ואנימציות</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card">
+              <h4 data-i18n="tierAdvancedGame">משחק מתקדם</h4>
+              <div class="tier-price">₪8,000+</div>
+              <ul class="tier-features">
+                <li data-i18n="gameF7">מנגנונים מורכבים</li>
+                <li data-i18n="gameF8">מולטיפלייר</li>
+                <li data-i18n="gameF9">לידרבורד</li>
+                <li data-i18n="gameF10">אנליטיקס</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital Experiences -->
+      <div class="pricing-accordion-item" data-category="experiences">
+        <button class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">✨</span>
+            <span data-i18n="pricingExperiences">חוויות דיגיטליות</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierDigitalInvite">הזמנה דיגיטלית</h4>
+              <div class="tier-price">₪500</div>
+              <ul class="tier-features">
+                <li data-i18n="expF1">עיצוב מותאם</li>
+                <li data-i18n="expF2">אנימציות</li>
+                <li>RSVP</li>
+                <li data-i18n="expF3">שיתוף קל</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierInteractiveInvite">הזמנה אינטראקטיבית</h4>
+              <div class="tier-price">₪1,200</div>
+              <ul class="tier-features">
+                <li data-i18n="expF4">גלריית תמונות</li>
+                <li data-i18n="expF5">מפה אינטראקטיבית</li>
+                <li data-i18n="expF6">ספירה לאחור</li>
+                <li data-i18n="expF7">מוזיקה</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card">
+              <h4 data-i18n="tierFullExperience">חוויה מלאה</h4>
+              <div class="tier-price">₪2,500</div>
+              <ul class="tier-features">
+                <li data-i18n="expF8">סיפור אינטראקטיבי</li>
+                <li data-i18n="expF9">מיני-משחק</li>
+                <li data-i18n="expF10">התאמה אישית מלאה</li>
+                <li data-i18n="expF11">אנליטיקס</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logo Design -->
+      <div class="pricing-accordion-item" data-category="logo">
+        <button class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">🎨</span>
+            <span data-i18n="pricingLogo">עיצוב לוגו</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierBasic">בסיסי</h4>
+              <div class="tier-price">₪300</div>
+              <ul class="tier-features">
+                <li data-i18n="logoF1">3 הצעות עיצוב</li>
+                <li data-i18n="logoF2">2 סבבי תיקונים</li>
+                <li data-i18n="logoF3">קבצי PNG/SVG</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierProfessional">מקצועי</h4>
+              <div class="tier-price">₪600</div>
+              <ul class="tier-features">
+                <li data-i18n="logoF4">5 הצעות עיצוב</li>
+                <li data-i18n="logoF5">תיקונים ללא הגבלה</li>
+                <li data-i18n="logoF6">מדריך מותג</li>
+                <li data-i18n="logoF7">כל הפורמטים</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card">
+              <h4 data-i18n="tierFullIdentity">זהות מלאה</h4>
+              <div class="tier-price">₪1,500</div>
+              <ul class="tier-features">
+                <li data-i18n="logoF8">לוגו + כרטיס ביקור</li>
+                <li data-i18n="logoF9">נייר מכתבים</li>
+                <li data-i18n="logoF10">חתימת אימייל</li>
+                <li data-i18n="logoF11">מדריך מותג מלא</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Claude Code Training -->
+      <div class="pricing-accordion-item" data-category="training">
+        <button class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">🎓</span>
+            <span data-i18n="pricingTraining">הדרכת Claude Code</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierIntro">מבוא</h4>
+              <div class="tier-price">₪250</div>
+              <ul class="tier-features">
+                <li data-i18n="trainF1">שעה וחצי</li>
+                <li data-i18n="trainF2">יסודות Claude</li>
+                <li data-i18n="trainF3">תרגול מעשי</li>
+                <li data-i18n="trainF4">חומרים להמשך</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierAdvanced">מתקדם</h4>
+              <div class="tier-price">₪500</div>
+              <ul class="tier-features">
+                <li data-i18n="trainF5">3 שעות</li>
+                <li data-i18n="trainF6">טכניקות מתקדמות</li>
+                <li data-i18n="trainF7">פרויקט מעשי</li>
+                <li data-i18n="trainF8">תמיכה בוואטסאפ</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card">
+              <h4 data-i18n="tierBusiness">עסקי</h4>
+              <div class="tier-price">₪1,500</div>
+              <ul class="tier-features">
+                <li data-i18n="trainF9">הדרכת צוות</li>
+                <li data-i18n="trainF10">התאמה לעסק</li>
+                <li data-i18n="trainF11">5 משתתפים</li>
+                <li data-i18n="trainF12">ליווי חודשי</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IT Services -->
+      <div class="pricing-accordion-item" data-category="it">
+        <button class="accordion-header">
+          <div class="accordion-title">
+            <span class="accordion-icon">🖥️</span>
+            <span data-i18n="pricingIT">שירותי IT</span>
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-tiers">
+            <div class="tier-card">
+              <h4 data-i18n="tierHourly">תמיכה שעתית</h4>
+              <div class="tier-price">₪150/שעה</div>
+              <ul class="tier-features">
+                <li data-i18n="itF1">פתרון בעיות</li>
+                <li data-i18n="itF2">הגדרות</li>
+                <li data-i18n="itF3">התקנות</li>
+                <li data-i18n="itF4">מרחוק או פיזי</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+            <div class="tier-card featured">
+              <div class="tier-badge" data-i18n="tierBadge">הכי פופולרי</div>
+              <h4 data-i18n="tierMonthly">חבילה חודשית</h4>
+              <div class="tier-price">₪400/חודש</div>
+              <ul class="tier-features">
+                <li data-i18n="itF5">עד 4 שעות תמיכה</li>
+                <li data-i18n="itF6">זמן תגובה מהיר</li>
+                <li data-i18n="itF7">גיבויים</li>
+                <li data-i18n="itF8">ניטור</li>
+              </ul>
+              <a href="#contact" class="tier-btn" data-i18n="tierBtn">בחירה</a>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials" id="testimonials">
+    <div class="section-title">
+      <h2 data-i18n="testimonialsTitle">מה אומרים עלינו</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">"עבדתי עם GOODIN על דף נחיתה וחוויה אינטראקטיבית קטנה לפרויקט אישי. כל התהליך היה סופר מדויק ורגיש לפרטים, והמערכת שבנינו ממשיכה לעבוד אוטומטית גם כשאני לא על המחשב."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">נ</div>
+          <div class="author-info">
+            <h4>נטע קלונר</h4>
+            <p>דף נחיתה לסדנה + מיני-CRM</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"We love the landing page they crafted. It feels both professional and cutting-edge, generating more leads than ever!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">O</div>
+          <div class="author-info">
+            <h4>Oliver Chen</h4>
+            <p>Our Partners</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-text">"Their automation solutions significantly eased our workflow. We're incredibly grateful for AI GOODIN's support."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div class="author-info">
+            <h4>Maya Rodriguez</h4>
+            <p>Trusted Clients</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class="process-section" id="process">
+    <h2 data-i18n="processTitle">תהליך העבודה</h2>
+    <p class="process-subtitle" data-i18n="processSubtitle">מהרעיון ועד ההשקה - הדרך שלנו ליצור קסם</p>
+
+    <div class="process-flow">
+      <div class="flow-line"></div>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-node">
+            <span class="step-number-badge">1</span>
+            <span class="step-icon">💬</span>
+          </div>
+          <div class="step-title" data-i18n="step1">שיחת היכרות</div>
+          <div class="step-desc" data-i18n="step1Desc">נבין מה אתם צריכים ומה החלום</div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-node">
+            <span class="step-number-badge">2</span>
+            <span class="step-icon">📋</span>
+          </div>
+          <div class="step-title" data-i18n="step2">הצעת מחיר</div>
+          <div class="step-desc" data-i18n="step2Desc">מותאמת אישית לפרויקט שלכם</div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-node">
+            <span class="step-number-badge">3</span>
+            <span class="step-icon">✏️</span>
+          </div>
+          <div class="step-title" data-i18n="step3">תכנון ועיצוב</div>
+          <div class="step-desc" data-i18n="step3Desc">מיפוי הפתרון והעיצוב הראשוני</div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-node">
+            <span class="step-number-badge">4</span>
+            <span class="step-icon">⚡</span>
+          </div>
+          <div class="step-title" data-i18n="step4">פיתוח</div>
+          <div class="step-desc" data-i18n="step4Desc">בניית המוצר עם עדכונים שוטפים</div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-node">
+            <span class="step-number-badge">5</span>
+            <span class="step-icon">🔍</span>
+          </div>
+          <div class="step-title" data-i18n="step5">בדיקות</div>
+          <div class="step-desc" data-i18n="step5Desc">וידוא שהכל עובד מושלם</div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-node">
+            <span class="step-number-badge">6</span>
+            <span class="step-icon">🚀</span>
+          </div>
+          <div class="step-title" data-i18n="step6">השקה</div>
+          <div class="step-desc" data-i18n="step6Desc">העלאה לאוויר ומסירת המוצר</div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-node">
+            <span class="step-number-badge">7</span>
+            <span class="step-icon">🤝</span>
+          </div>
+          <div class="step-title" data-i18n="step7">תמיכה</div>
+          <div class="step-desc" data-i18n="step7Desc">אנחנו כאן גם אחרי ההשקה</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section" id="faq">
+    <h2 data-i18n="faqTitle">שאלות נפוצות</h2>
+    <p class="faq-subtitle" data-i18n="faqSubtitle">כל מה שצריך לדעת</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span data-i18n="faq1Q">מה זה Vibe Coding?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer" data-i18n="faq1A">
+          Vibe Coding זו הגישה שלנו לפיתוח - לא רק לכתוב קוד, אלא ליצור חוויות דיגיטליות שמרגישות נכון. זה אומר לשים לב לפרטים הקטנים, לאנימציות, לזרימה של המשתמש - כל מה שהופך מוצר טוב למוצר מדהים.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span data-i18n="faq2Q">כמה זמן לוקח פרויקט?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer" data-i18n="faq2A">
+          תלוי בסוג הפרויקט. דף נחיתה פשוט - 3-5 ימים. אתר מלא - 2-4 שבועות. אוטומציות - שבוע עד שבועיים. נספק לכם הערכה מדויקת בשיחת ההיכרות.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span data-i18n="faq3Q">יש תמיכה לאחר ההשקה?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer" data-i18n="faq3A">
+          בהחלט! אנחנו לא נעלמים אחרי מסירת הפרויקט. יש תקופת תמיכה כלולה, ואפשר תמיד להרחיב לתמיכה שוטפת לפי הצורך.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          <span data-i18n="faq4Q">מה הופך את AI GOODIN לייחודי?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-answer" data-i18n="faq4A">
+          אנחנו משלבים ניסיון טכני עמוק עם גישה יצירתית. אנחנו לא רק מפתחים - אנחנו שותפים שמבינים את העסק שלכם ויוצרים פתרונות שבאמת עובדים.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section - Full Form -->
+  <section class="contact-section" id="contact">
+    <h2 data-i18n="contactTitle">בואו נתחיל את הפרויקט שלכם</h2>
+    <p class="contact-subtitle" data-i18n="contactSubtitle">ספרו לנו על הפרויקט ונחזור אליכם תוך 24 שעות</p>
+
+    <form class="contact-form" onsubmit="return false;">
+      <div class="form-grid">
+        <!-- Contact Info Column -->
+        <div class="form-column">
+          <h3 class="form-section-title" data-i18n="formContact">פרטי התקשרות</h3>
+          <input type="text" placeholder="שם מלא *" class="contact-input" data-i18n="formName" required>
+          <input type="email" placeholder="אימייל *" class="contact-input" data-i18n="formEmail" required>
+          <input type="tel" placeholder="טלפון" class="contact-input" data-i18n="formPhone">
+        </div>
+
+        <!-- Project Details Column -->
+        <div class="form-column">
+          <h3 class="form-section-title" data-i18n="formProject">פרטי הפרויקט</h3>
+          <div class="select-wrapper">
+            <select class="contact-input contact-select">
+              <option value="" data-i18n="formProjectType">סוג הפרויקט *</option>
+              <option value="landing" data-i18n="formOptLanding">דף נחיתה</option>
+              <option value="website" data-i18n="formOptWebsite">אתר מלא</option>
+              <option value="automation" data-i18n="formOptAutomation">אוטומציה / בוט</option>
+              <option value="game" data-i18n="formOptGame">משחק דיגיטלי</option>
+              <option value="training" data-i18n="formOptTraining">הדרכת Claude Code</option>
+              <option value="other" data-i18n="formOptOther">אחר</option>
+            </select>
+          </div>
+          <div class="select-wrapper">
+            <select class="contact-input contact-select">
+              <option value="" data-i18n="formBudget">תקציב</option>
+              <option value="500-1500">₪500 - ₪1,500</option>
+              <option value="1500-3000">₪1,500 - ₪3,000</option>
+              <option value="3000-5000">₪3,000 - ₪5,000</option>
+              <option value="5000+">₪5,000+</option>
+              <option value="unsure" data-i18n="formOptUnsure">עוד לא בטוח</option>
+            </select>
+          </div>
+          <div class="select-wrapper">
+            <select class="contact-input contact-select">
+              <option value="" data-i18n="formTimeline">לוח זמנים</option>
+              <option value="asap">ASAP</option>
+              <option value="1-2weeks" data-i18n="formOpt1_2Weeks">1-2 שבועות</option>
+              <option value="1month" data-i18n="formOpt1Month">תוך חודש</option>
+              <option value="flexible" data-i18n="formOptFlexible">גמיש</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message - Full Width -->
+      <div class="form-full-width">
+        <textarea class="contact-input contact-textarea" data-i18n="formTextarea" placeholder="ספרו לנו על הפרויקט... מה החזון שלכם? איזו בעיה אתם פותרים?" rows="5"></textarea>
+        <button type="submit" class="btn-gold-submit" data-i18n="formSubmit">שליחה וקבלת הצעת מחיר</button>
+      </div>
+    </form>
+
+    <!-- Contact Links -->
+    <div class="contact-links">
+      <a href="mailto:ai.goodin.live@gmail.com" class="contact-link">
+        <span class="contact-link-icon">✉️</span>
+        <span>ai.goodin.live@gmail.com</span>
+      </a>
+      <a href="https://wa.me/972501234567" class="contact-link">
+        <span class="contact-link-icon">💬</span>
+        <span>WhatsApp</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">G</div>
+          <span class="footer-logo-text">AI GOODIN</span>
+        </div>
+        <p class="footer-desc" data-i18n="footerDesc">סטודיו דיגיטלי שמשלב טכנולוגיה מתקדמת עם יצירתיות ואינטואיציה.</p>
+        <div class="footer-social">
+          <a href="mailto:ai.goodin.live@gmail.com" title="Email">✉️</a>
+          <a href="https://wa.me/972501234567" target="_blank" title="WhatsApp">💬</a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footerServices">שירותים</h4>
+        <ul>
+          <li><a href="#services">אוטומציות חכמות</a></li>
+          <li><a href="#services">Vibe Coding</a></li>
+          <li><a href="#services">משחקים דיגיטליים</a></li>
+          <li><a href="#services">עיצוב לוגו</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4 data-i18n="footerCompany">החברה</h4>
+        <ul>
+          <li><a href="#about">אודות</a></li>
+          <li><a href="#portfolio">עבודות נבחרות</a></li>
+          <li><a href="#pricing">מחירון</a></li>
+          <li><a href="#faq">שאלות נפוצות</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>AI GOODIN © 2026 | כל הזכויות שמורות</p>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/972501234567" class="whatsapp-btn" target="_blank">💬</a>
+
+  <script>
+    // ===== LANGUAGE SYSTEM =====
+    let currentLang = 'he';
+
+    const translations = {
+      he: {
+        // Nav
+        navServices: 'שירותים',
+        navProcess: 'תהליך עבודה',
+        navPricing: 'מחירים',
+        navContact: 'צור קשר',
+        navCta: 'בואו נדבר',
+        navTestimonials: 'המלצות',
+
+        // Hero
+        heroTitle: 'Future Meets Creativity',
+        heroSubtitle: 'סטודיו דיגיטלי שהופך רעיונות למציאות. טכנולוגיה, עיצוב ויצירתיות - הכל במקום אחד.',
+        heroTags: 'עיצוב | דפי נחיתה | אוטומציות | משחקים',
+        heroBtn1: 'בואו נדבר על הפרויקט שלכם',
+        heroBtn2: 'לשירותים',
+
+        // About
+        aboutTitle: 'אודות GOODIN',
+        aboutP1: 'אנחנו סטודיו דיגיטלי שמאמין שטכנולוגיה צריכה להרגיש קסומה. עם שנים של ניסיון ב-IT, פיתוח ו-AI, אנחנו יוצרים פתרונות דיגיטליים שעובדים לאנשים אמיתיים.',
+        aboutP2: 'הגישה שלנו של Vibe Coding אומרת שאנחנו לא רק בונים פיצ׳רים - אנחנו יוצרים חוויות. כל פרויקט מלא ביצירתיות, תשומת לב לפרטים והבנה עמוקה של מה שגורם למוצרים דיגיטליים להרגיש נכון.',
+
+        // Services
+        servicesTitle: 'הכירו את השירותים שלנו',
+        svc1Title: 'אוטומציות חכמות',
+        svc1Desc: 'תהליכים שרצים לבד - בלי שתצטרכו לחשוב עליהם. בוטים, תזכורות, סנכרון מערכות, ועוד.',
+        svc1Price: 'החל מ-₪800',
+        svc2Title: 'Vibe Coding',
+        svc2Desc: 'דפי נחיתה וחוויות דיגיטליות שמרגישות נכון. לעסקים, ליוצרים, ולכל מי שרוצה נוכחות אונליין.',
+        svc2Price: 'החל מ-₪1,500',
+        svc3Title: 'משחקים דיגיטליים',
+        svc3Desc: 'משחקים שמעבירים מסר, מלמדים ונשארים בזיכרון. לאירועים, לשיווק, לחינוך.',
+        svc3Price: 'החל מ-₪2,000',
+        svc4Title: 'חוויות דיגיטליות',
+        svc4Desc: 'הזמנות אינטראקטיביות, כרטיסי ברכה, מצגות חיות. כל מה שהופך רגע רגיל למיוחד.',
+        svc4Price: 'לפי פרויקט',
+        svc5Title: 'עיצוב לוגו',
+        svc5Desc: 'זהות ויזואלית שמדברת בשבילכם. לוגו מקצועי שמתאים בדיוק למותג שלכם.',
+        svc5Price: 'החל מ-₪500',
+        svc6Title: 'הדרכת Claude Code',
+        svc6Desc: 'הפכו AI לשותף עבודה - הדרכה מעשית לעסקים ויחידים.',
+        svc6Price: 'החל מ-₪250',
+        svc7Title: 'שירותי IT',
+        svc7Desc: 'עזרה עם מחשבים, תוכנות והגדרות. תמיכה טכנית אישית ומקצועית.',
+        svc7Price: 'החל מ-₪150/שעה',
+        svcBtnStart: 'בואו נתחיל',
+        svcBtnProjects: 'לצפייה בפרויקטים',
+        svcBtnTalk: 'דברו איתנו',
+        svcBtnDetails: 'לפרטים',
+
+        // Portfolio
+        portfolioTitle: 'עבודות נבחרות',
+        portfolioDesc: 'פרויקטים אחרונים שאנחנו גאים בהם',
+        proj1: 'דף נחיתה לסטארטאפ',
+        proj2: 'משחק חינוכי לילדים',
+        proj3: 'אתר תדמית לעסק',
+        proj4: 'שדרוג דף לעסק מקומי',
+
+        // Vibe Section
+        vibeDesc: 'בניית דפי נחיתה וחוויות אינטראקטיביות שמתרגמות את השפה של המותג לוייב דיגיטלי ברור. תכנון מסלולי משתמש שמובילים משלב הסקרנות לפעולה – בלי להרגיש "מכירתיים מדי".',
+        vibeBtn: 'רוצה לדעת עוד?',
+
+        // Pricing
+        pricingTitle: 'מחירון שירותים',
+        pricingDesc: 'מחירים שקופים, בלי הפתעות',
+        pricingLanding: 'דפי נחיתה',
+        pricingWebsites: 'אתרים מלאים',
+        pricingAutomations: 'אוטומציות ובוטים',
+        pricingGames: 'משחקים דיגיטליים',
+        pricingExperiences: 'חוויות דיגיטליות',
+        pricingLogo: 'עיצוב לוגו',
+        pricingTraining: 'הדרכת Claude Code',
+        pricingIT: 'שירותי IT',
+        pricingRedesign: 'שדרוג דף נחיתה',
+        redesignIntro: 'יש לך דף נחיתה ישן? נהפוך אותו לזהב דיגיטלי!',
+        tierQuickRefresh: 'Quick Refresh',
+        tierFullRedesign: 'Full Redesign',
+        tierPlusRedesign: 'Plus+',
+        redesignF1: 'עדכון צבעים וטיפוגרפיה',
+        redesignF2: 'שדרוג כפתורי CTA',
+        redesignF3: 'אופטימיזציה למובייל',
+        redesignF4: 'שיפורי קריאות',
+        redesignF5: 'בנייה מחדש מלאה',
+        redesignF6: 'עיצוב מותאם אישית',
+        redesignF7: 'תמונות ואייקונים חדשים',
+        redesignF8: 'אנימציות',
+        redesignF9: 'רספונסיבי מלא',
+        redesignF10: 'הכל מ-Full Redesign',
+        redesignF11: 'כתיבת תוכן שיווקי',
+        redesignF12: 'אופטימיזציית SEO',
+        redesignF13: 'אינטגרציה עם Analytics',
+        redesignF14: 'ליווי לאחר השקה',
+        redesignTime1: '3-5 ימי עסקים',
+        redesignTime2: '7-10 ימי עסקים',
+        redesignTime3: '14-21 ימי עסקים',
+        newBadge: 'חדש!',
+        promoNew: 'שירות חדש!',
+        promoTitle: 'יש לך דף נחיתה ישן?',
+        promoDesc: 'שדרוג מקצועי של דפי נחיתה קיימים - מ-₪800 בלבד. עיצוב חדש, ביצועים משופרים, יותר לידים.',
+        promoBenefit1: '✓ ניתוח מקצועי של הדף הקיים',
+        promoBenefit2: '✓ עיצוב מודרני ומותאם למותג',
+        promoBenefit3: '✓ אופטימיזציה לנייד ולמהירות',
+        promoBenefit4: '✓ תהליך פשוט ומהיר',
+        promoCta: 'שדרג את הדף שלך עכשיו',
+        demoBefore: 'לפני',
+        demoAfter: 'אחרי',
+        demoPlaceholder: 'סרטון הדגמה בקרוב',
+        tierBasic: 'בסיסי',
+        tierAdvanced: 'מתקדם',
+        tierPremium: 'פרימיום',
+        tierBusiness: 'עסקי',
+        tierEnterprise: 'אנטרפרייז',
+        tierWhatsApp: 'בוט WhatsApp',
+        tierFullSystem: 'מערכת מלאה',
+        tierSimpleGame: 'משחק פשוט',
+        tierCustomGame: 'משחק מותאם',
+        tierAdvancedGame: 'משחק מתקדם',
+        tierDigitalInvite: 'הזמנה דיגיטלית',
+        tierInteractiveInvite: 'הזמנה אינטראקטיבית',
+        tierFullExperience: 'חוויה מלאה',
+        tierProfessional: 'מקצועי',
+        tierFullIdentity: 'זהות מלאה',
+        tierIntro: 'מבוא',
+        tierHourly: 'תמיכה שעתית',
+        tierMonthly: 'חבילה חודשית',
+        tierBadge: 'הכי פופולרי',
+        tierBtn: 'בחירה',
+        landingF1: 'דף נחיתה אחד',
+        landingF2: 'עיצוב מותאם',
+        landingF3: 'טופס יצירת קשר',
+        landingF4: 'תמיכה לחודש',
+        landingF5: 'עד 3 עמודים',
+        landingF6: 'אנימציות',
+        landingF7: 'SEO בסיסי',
+        landingF8: 'תמיכה ל-2 חודשים',
+        landingF9: 'עד 5 עמודים',
+        landingF10: 'אנימציות מתקדמות',
+        landingF11: 'SEO מלא',
+        landingF12: 'תמיכה ל-3 חודשים',
+        landingF13: 'אינטגרציות',
+        websiteF1: 'עד 10 עמודים',
+        websiteF2: 'מערכת ניהול תוכן',
+        websiteF3: 'עיצוב פרימיום',
+        websiteF4: 'SEO מלא',
+        websiteF5: 'עמודים ללא הגבלה',
+        websiteF6: 'בלוג',
+        websiteF7: 'אינטגרציות',
+        websiteF8: 'תמיכה שנתית',
+        websiteF9: 'פתרון מותאם אישית',
+        websiteF10: 'אפליקציה ייעודית',
+        websiteF11: 'API מותאם',
+        websiteF12: 'תמיכה ייעודית',
+        autoF1: 'אוטומציה אחת',
+        autoF2: 'הגדרה ובדיקות',
+        autoF3: 'תיעוד',
+        autoF4: 'בוט מותאם',
+        autoF5: 'תגובות אוטומטיות',
+        autoF6: 'תפריט אינטראקטיבי',
+        autoF7: 'תמיכה לחודש',
+        autoF8: 'אוטומציות מרובות',
+        autoF9: 'אינטגרציות CRM',
+        autoF10: 'דוחות',
+        autoF11: 'תמיכה שנתית',
+        gameF1: 'משחק בסיסי',
+        gameF2: 'עיצוב מותאם',
+        gameF3: 'מובייל ודסקטופ',
+        gameF4: 'מנגנוני משחק מתקדמים',
+        gameF5: 'שמירת התקדמות',
+        gameF6: 'אפקטים ואנימציות',
+        gameF7: 'מנגנונים מורכבים',
+        gameF8: 'מולטיפלייר',
+        gameF9: 'לידרבורד',
+        gameF10: 'אנליטיקס',
+        expF1: 'עיצוב מותאם',
+        expF2: 'אנימציות',
+        expF3: 'שיתוף קל',
+        expF4: 'גלריית תמונות',
+        expF5: 'מפה אינטראקטיבית',
+        expF6: 'ספירה לאחור',
+        expF7: 'מוזיקה',
+        expF8: 'סיפור אינטראקטיבי',
+        expF9: 'מיני-משחק',
+        expF10: 'התאמה אישית מלאה',
+        expF11: 'אנליטיקס',
+        logoF1: '3 הצעות עיצוב',
+        logoF2: '2 סבבי תיקונים',
+        logoF3: 'קבצי PNG/SVG',
+        logoF4: '5 הצעות עיצוב',
+        logoF5: 'תיקונים ללא הגבלה',
+        logoF6: 'מדריך מותג',
+        logoF7: 'כל הפורמטים',
+        logoF8: 'לוגו + כרטיס ביקור',
+        logoF9: 'נייר מכתבים',
+        logoF10: 'חתימת אימייל',
+        logoF11: 'מדריך מותג מלא',
+        trainF1: 'שעה וחצי',
+        trainF2: 'יסודות Claude',
+        trainF3: 'תרגול מעשי',
+        trainF4: 'חומרים להמשך',
+        trainF5: '3 שעות',
+        trainF6: 'טכניקות מתקדמות',
+        trainF7: 'פרויקט מעשי',
+        trainF8: 'תמיכה בוואטסאפ',
+        trainF9: 'הדרכת צוות',
+        trainF10: 'התאמה לעסק',
+        trainF11: '5 משתתפים',
+        trainF12: 'ליווי חודשי',
+        itF1: 'פתרון בעיות',
+        itF2: 'הגדרות',
+        itF3: 'התקנות',
+        itF4: 'מרחוק או פיזי',
+        itF5: 'עד 4 שעות תמיכה',
+        itF6: 'זמן תגובה מהיר',
+        itF7: 'גיבויים',
+        itF8: 'ניטור',
+
+        // Process
+        processTitle: 'תהליך העבודה',
+        processSubtitle: 'מהרעיון ועד ההשקה - הדרך שלנו ליצור קסם',
+        step1: 'שיחת היכרות',
+        step1Desc: 'נבין מה אתם צריכים ומה החלום',
+        step2: 'הצעת מחיר',
+        step2Desc: 'מותאמת אישית לפרויקט שלכם',
+        step3: 'תכנון ועיצוב',
+        step3Desc: 'מיפוי הפתרון והעיצוב הראשוני',
+        step4: 'פיתוח',
+        step4Desc: 'בניית המוצר עם עדכונים שוטפים',
+        step5: 'בדיקות',
+        step5Desc: 'וידוא שהכל עובד מושלם',
+        step6: 'השקה',
+        step6Desc: 'העלאה לאוויר ומסירת המוצר',
+        step7: 'תמיכה',
+        step7Desc: 'אנחנו כאן גם אחרי ההשקה',
+
+        // Testimonials
+        testimonialsTitle: 'מה אומרים עלינו',
+
+        // FAQ
+        faqTitle: 'שאלות נפוצות',
+        faqSubtitle: 'כל מה שצריך לדעת',
+        faq1Q: 'מה זה Vibe Coding?',
+        faq1A: 'Vibe Coding זו הגישה שלנו לפיתוח - לא רק לכתוב קוד, אלא ליצור חוויות דיגיטליות שמרגישות נכון. זה אומר לשים לב לפרטים הקטנים, לאנימציות, לזרימה של המשתמש - כל מה שהופך מוצר טוב למוצר מדהים.',
+        faq2Q: 'כמה זמן לוקח פרויקט?',
+        faq2A: 'תלוי בסוג הפרויקט. דף נחיתה פשוט - 3-5 ימים. אתר מלא - 2-4 שבועות. אוטומציות - שבוע עד שבועיים. נספק לכם הערכה מדויקת בשיחת ההיכרות.',
+        faq3Q: 'יש תמיכה לאחר ההשקה?',
+        faq3A: 'בהחלט! אנחנו לא נעלמים אחרי מסירת הפרויקט. יש תקופת תמיכה כלולה, ואפשר תמיד להרחיב לתמיכה שוטפת לפי הצורך.',
+        faq4Q: 'מה הופך את AI GOODIN לייחודי?',
+        faq4A: 'אנחנו משלבים ניסיון טכני עמוק עם גישה יצירתית. אנחנו לא רק מפתחים - אנחנו שותפים שמבינים את העסק שלכם ויוצרים פתרונות שבאמת עובדים.',
+
+        // Contact
+        contactTitle: 'בואו נתחיל את הפרויקט שלכם',
+        contactSubtitle: 'ספרו לנו על הפרויקט ונחזור אליכם תוך 24 שעות',
+        formContact: 'פרטי התקשרות',
+        formProject: 'פרטי הפרויקט',
+        formName: 'שם מלא *',
+        formEmail: 'אימייל *',
+        formPhone: 'טלפון',
+        formProjectType: 'סוג הפרויקט *',
+        formOptLanding: 'דף נחיתה',
+        formOptWebsite: 'אתר מלא',
+        formOptAutomation: 'אוטומציה / בוט',
+        formOptGame: 'משחק דיגיטלי',
+        formOptTraining: 'הדרכת Claude Code',
+        formOptOther: 'אחר',
+        formBudget: 'תקציב',
+        formOptUnsure: 'עוד לא בטוח',
+        formTimeline: 'לוח זמנים',
+        formOpt1_2Weeks: '1-2 שבועות',
+        formOpt1Month: 'תוך חודש',
+        formOptFlexible: 'גמיש',
+        formTextarea: 'ספרו לנו על הפרויקט... מה החזון שלכם? איזו בעיה אתם פותרים?',
+        formSubmit: 'שליחה וקבלת הצעת מחיר',
+
+        // Footer
+        footerDesc: 'סטודיו דיגיטלי שמשלב טכנולוגיה מתקדמת עם יצירתיות ואינטואיציה.',
+        footerServices: 'שירותים',
+        footerCompany: 'החברה',
+        footerRights: 'כל הזכויות שמורות'
+      },
+      en: {
+        navServices: 'Services',
+        navProcess: 'Process',
+        navPricing: 'Pricing',
+        navContact: 'Contact',
+        navCta: "Let's Talk",
+        navTestimonials: 'Testimonials',
+
+        heroTitle: 'Future Meets Creativity',
+        heroSubtitle: 'A digital studio that turns ideas into reality. Technology, design and creativity - all in one place.',
+        heroTags: 'Design | Landing Pages | Automations | Games',
+        heroBtn1: "Let's Talk About Your Project",
+        heroBtn2: 'To Services',
+
+        aboutTitle: 'About GOODIN',
+        aboutP1: 'We are a digital studio that believes technology should feel magical. With years of experience in IT, development and AI, we create digital solutions that work for real people.',
+        aboutP2: 'Our Vibe Coding approach means we do not just build features - we create experiences. Every project is filled with creativity, attention to detail, and a deep understanding of what makes digital products feel right.',
+
+        servicesTitle: 'Our Services',
+        svc1Title: 'Smart Automations',
+        svc1Desc: 'Processes that run on their own - without you having to think about them. Bots, reminders, system sync, and more.',
+        svc1Price: 'From ₪800',
+        svc2Title: 'Vibe Coding',
+        svc2Desc: 'Landing pages and digital experiences that feel right. For businesses, creators, and anyone who wants an online presence.',
+        svc2Price: 'From ₪1,500',
+        svc3Title: 'Digital Games',
+        svc3Desc: 'Games that convey a message, teach, and stay in memory. For events, marketing, education.',
+        svc3Price: 'From ₪2,000',
+        svc4Title: 'Digital Experiences',
+        svc4Desc: 'Interactive invitations, greeting cards, live presentations. Everything that turns an ordinary moment into special.',
+        svc4Price: 'Per project',
+        svc5Title: 'Logo Design',
+        svc5Desc: 'Visual identity that speaks for you. Professional logo that fits your brand perfectly.',
+        svc5Price: 'From ₪500',
+        svc6Title: 'Claude Code Training',
+        svc6Desc: 'Turn AI into a work partner - practical training for businesses and individuals.',
+        svc6Price: 'From ₪250',
+        svc7Title: 'IT Services',
+        svc7Desc: 'Help with computers, software, and settings. Personal and professional technical support.',
+        svc7Price: 'From ₪150/hour',
+        svcBtnStart: 'Get Started',
+        svcBtnProjects: 'View Projects',
+        svcBtnTalk: 'Talk to Us',
+        svcBtnDetails: 'Details',
+
+        portfolioTitle: 'Selected Works',
+        portfolioDesc: 'Recent projects we are proud of',
+        proj1: 'Startup Landing Page',
+        proj2: 'Educational Kids Game',
+        proj3: 'Business Website',
+        proj4: 'Local Business Page Redesign',
+
+        vibeDesc: 'Building landing pages and interactive experiences that translate brand language into clear digital vibe. Designing user journeys that lead from curiosity to action - without feeling too salesy.',
+        vibeBtn: 'Want to learn more?',
+
+        pricingTitle: 'Service Pricing',
+        pricingDesc: 'Transparent pricing, no surprises',
+        pricingLanding: 'Landing Pages',
+        pricingWebsites: 'Full Websites',
+        pricingAutomations: 'Automations & Bots',
+        pricingGames: 'Digital Games',
+        pricingExperiences: 'Digital Experiences',
+        pricingLogo: 'Logo Design',
+        pricingTraining: 'Claude Code Training',
+        pricingIT: 'IT Services',
+        pricingRedesign: 'Landing Page Redesign',
+        redesignIntro: 'Have an old landing page? Let us turn it into digital gold!',
+        tierQuickRefresh: 'Quick Refresh',
+        tierFullRedesign: 'Full Redesign',
+        tierPlusRedesign: 'Plus+',
+        redesignF1: 'Color & typography update',
+        redesignF2: 'CTA button upgrade',
+        redesignF3: 'Mobile optimization',
+        redesignF4: 'Readability improvements',
+        redesignF5: 'Complete rebuild',
+        redesignF6: 'Custom design',
+        redesignF7: 'New images & icons',
+        redesignF8: 'Animations',
+        redesignF9: 'Fully responsive',
+        redesignF10: 'Everything from Full Redesign',
+        redesignF11: 'Marketing copy writing',
+        redesignF12: 'SEO optimization',
+        redesignF13: 'Analytics integration',
+        redesignF14: 'Post-launch support',
+        redesignTime1: '3-5 business days',
+        redesignTime2: '7-10 business days',
+        redesignTime3: '14-21 business days',
+        newBadge: 'New!',
+        promoNew: 'New Service!',
+        promoTitle: 'Have an old landing page?',
+        promoDesc: 'Professional redesign of existing landing pages - from ₪800 only. New design, improved performance, more leads.',
+        promoBenefit1: '✓ Professional analysis of your current page',
+        promoBenefit2: '✓ Modern design tailored to your brand',
+        promoBenefit3: '✓ Mobile and speed optimization',
+        promoBenefit4: '✓ Simple and fast process',
+        promoCta: 'Upgrade Your Page Now',
+        demoBefore: 'Before',
+        demoAfter: 'After',
+        demoPlaceholder: 'Demo video coming soon',
+        tierBasic: 'Basic',
+        tierAdvanced: 'Advanced',
+        tierPremium: 'Premium',
+        tierBusiness: 'Business',
+        tierEnterprise: 'Enterprise',
+        tierWhatsApp: 'WhatsApp Bot',
+        tierFullSystem: 'Full System',
+        tierSimpleGame: 'Simple Game',
+        tierCustomGame: 'Custom Game',
+        tierAdvancedGame: 'Advanced Game',
+        tierDigitalInvite: 'Digital Invite',
+        tierInteractiveInvite: 'Interactive Invite',
+        tierFullExperience: 'Full Experience',
+        tierProfessional: 'Professional',
+        tierFullIdentity: 'Full Identity',
+        tierIntro: 'Intro',
+        tierHourly: 'Hourly Support',
+        tierMonthly: 'Monthly Package',
+        tierBadge: 'Most Popular',
+        tierBtn: 'Select',
+        landingF1: 'One landing page',
+        landingF2: 'Custom design',
+        landingF3: 'Contact form',
+        landingF4: 'Month support',
+        landingF5: 'Up to 3 pages',
+        landingF6: 'Animations',
+        landingF7: 'Basic SEO',
+        landingF8: '2 months support',
+        landingF9: 'Up to 5 pages',
+        landingF10: 'Advanced animations',
+        landingF11: 'Full SEO',
+        landingF12: '3 months support',
+        landingF13: 'Integrations',
+        websiteF1: 'Up to 10 pages',
+        websiteF2: 'CMS',
+        websiteF3: 'Premium design',
+        websiteF4: 'Full SEO',
+        websiteF5: 'Unlimited pages',
+        websiteF6: 'Blog',
+        websiteF7: 'Integrations',
+        websiteF8: 'Yearly support',
+        websiteF9: 'Custom solution',
+        websiteF10: 'Dedicated app',
+        websiteF11: 'Custom API',
+        websiteF12: 'Dedicated support',
+        autoF1: 'One automation',
+        autoF2: 'Setup & testing',
+        autoF3: 'Documentation',
+        autoF4: 'Custom bot',
+        autoF5: 'Auto responses',
+        autoF6: 'Interactive menu',
+        autoF7: 'Month support',
+        autoF8: 'Multiple automations',
+        autoF9: 'CRM integrations',
+        autoF10: 'Reports',
+        autoF11: 'Yearly support',
+        gameF1: 'Basic game',
+        gameF2: 'Custom design',
+        gameF3: 'Mobile & desktop',
+        gameF4: 'Advanced mechanics',
+        gameF5: 'Progress save',
+        gameF6: 'Effects & animations',
+        gameF7: 'Complex mechanics',
+        gameF8: 'Multiplayer',
+        gameF9: 'Leaderboard',
+        gameF10: 'Analytics',
+        expF1: 'Custom design',
+        expF2: 'Animations',
+        expF3: 'Easy sharing',
+        expF4: 'Photo gallery',
+        expF5: 'Interactive map',
+        expF6: 'Countdown',
+        expF7: 'Music',
+        expF8: 'Interactive story',
+        expF9: 'Mini-game',
+        expF10: 'Full customization',
+        expF11: 'Analytics',
+        logoF1: '3 design proposals',
+        logoF2: '2 revision rounds',
+        logoF3: 'PNG/SVG files',
+        logoF4: '5 design proposals',
+        logoF5: 'Unlimited revisions',
+        logoF6: 'Brand guide',
+        logoF7: 'All formats',
+        logoF8: 'Logo + business card',
+        logoF9: 'Letterhead',
+        logoF10: 'Email signature',
+        logoF11: 'Full brand guide',
+        trainF1: 'Hour and a half',
+        trainF2: 'Claude basics',
+        trainF3: 'Hands-on practice',
+        trainF4: 'Follow-up materials',
+        trainF5: '3 hours',
+        trainF6: 'Advanced techniques',
+        trainF7: 'Practical project',
+        trainF8: 'WhatsApp support',
+        trainF9: 'Team training',
+        trainF10: 'Business customization',
+        trainF11: '5 participants',
+        trainF12: 'Monthly guidance',
+        itF1: 'Problem solving',
+        itF2: 'Configurations',
+        itF3: 'Installations',
+        itF4: 'Remote or on-site',
+        itF5: 'Up to 4 hours support',
+        itF6: 'Fast response',
+        itF7: 'Backups',
+        itF8: 'Monitoring',
+
+        processTitle: 'Work Process',
+        processSubtitle: 'From idea to launch - our way of creating magic',
+        step1: 'Discovery Call',
+        step1Desc: 'Understanding your needs and dreams',
+        step2: 'Quote',
+        step2Desc: 'Customized for your project',
+        step3: 'Planning & Design',
+        step3Desc: 'Mapping the solution and initial design',
+        step4: 'Development',
+        step4Desc: 'Building with regular updates',
+        step5: 'Testing',
+        step5Desc: 'Ensuring everything works perfectly',
+        step6: 'Launch',
+        step6Desc: 'Going live and delivery',
+        step7: 'Support',
+        step7Desc: 'We are here after launch too',
+
+        // Testimonials
+        testimonialsTitle: 'What People Say',
+
+        faqTitle: 'FAQ',
+        faqSubtitle: 'Everything you need to know',
+        faq1Q: 'What is Vibe Coding?',
+        faq1A: 'Vibe Coding is our approach to development - not just writing code, but creating digital experiences that feel right. It means paying attention to small details, animations, user flow - everything that turns a good product into an amazing one.',
+        faq2Q: 'How long does a project take?',
+        faq2A: 'Depends on the project type. Simple landing page - 3-5 days. Full website - 2-4 weeks. Automations - one to two weeks. We will give you an accurate estimate in the discovery call.',
+        faq3Q: 'Is there support after launch?',
+        faq3A: 'Absolutely! We do not disappear after project delivery. Support period is included, and you can always extend to ongoing support as needed.',
+        faq4Q: 'What makes AI GOODIN unique?',
+        faq4A: 'We combine deep technical experience with a creative approach. We are not just developers - we are partners who understand your business and create solutions that actually work.',
+
+        contactTitle: "Let's Start Your Project",
+        contactSubtitle: "Tell us about your project and we'll get back within 24 hours",
+        formContact: 'Contact Information',
+        formProject: 'Project Details',
+        formName: 'Full Name *',
+        formEmail: 'Email *',
+        formPhone: 'Phone',
+        formProjectType: 'Project Type *',
+        formOptLanding: 'Landing Page',
+        formOptWebsite: 'Full Website',
+        formOptAutomation: 'Automation / Bot',
+        formOptGame: 'Digital Game',
+        formOptTraining: 'Claude Code Training',
+        formOptOther: 'Other',
+        formBudget: 'Budget',
+        formOptUnsure: 'Not sure yet',
+        formTimeline: 'Timeline',
+        formOpt1_2Weeks: '1-2 weeks',
+        formOpt1Month: 'Within a month',
+        formOptFlexible: 'Flexible',
+        formTextarea: 'Tell us about your project... What is your vision? What problem are you solving?',
+        formSubmit: 'Send & Get Quote',
+
+        footerDesc: 'A digital studio combining advanced technology with creativity and intuition.',
+        footerServices: 'Services',
+        footerCompany: 'Company',
+        footerRights: 'All rights reserved'
+      },
+      ru: {
+        navServices: 'Услуги',
+        navProcess: 'Процесс',
+        navPricing: 'Цены',
+        navContact: 'Контакт',
+        navCta: 'Связаться',
+        navTestimonials: 'Отзывы',
+
+        heroTitle: 'Будущее встречает Креатив',
+        heroSubtitle: 'Цифровая студия, превращающая идеи в реальность. Технологии, дизайн и креативность - всё в одном месте.',
+        heroTags: 'Дизайн | Лендинги | Автоматизации | Игры',
+        heroBtn1: 'Обсудить ваш проект',
+        heroBtn2: 'К услугам',
+
+        aboutTitle: 'О GOODIN',
+        aboutP1: 'Мы цифровая студия, которая верит, что технологии должны ощущаться волшебно. С многолетним опытом в IT, разработке и AI, мы создаём цифровые решения, которые работают для реальных людей.',
+        aboutP2: 'Наш подход Vibe Coding означает, что мы не просто создаём функции - мы создаём впечатления. Каждый проект наполнен креативностью, вниманием к деталям и глубоким пониманием того, что делает цифровые продукты правильными.',
+
+        servicesTitle: 'Наши Услуги',
+        svc1Title: 'Умные автоматизации',
+        svc1Desc: 'Процессы, которые работают сами - без необходимости думать о них. Боты, напоминания, синхронизация систем и многое другое.',
+        svc1Price: 'От ₪800',
+        svc2Title: 'Vibe Coding',
+        svc2Desc: 'Лендинги и цифровые впечатления, которые ощущаются правильно. Для бизнеса, создателей и всех, кто хочет присутствия онлайн.',
+        svc2Price: 'От ₪1,500',
+        svc3Title: 'Цифровые игры',
+        svc3Desc: 'Игры, которые передают послание, обучают и остаются в памяти. Для мероприятий, маркетинга, образования.',
+        svc3Price: 'От ₪2,000',
+        svc4Title: 'Цифровые впечатления',
+        svc4Desc: 'Интерактивные приглашения, открытки, живые презентации. Всё, что превращает обычный момент в особенный.',
+        svc4Price: 'По проекту',
+        svc5Title: 'Дизайн логотипа',
+        svc5Desc: 'Визуальная идентичность, которая говорит за вас. Профессиональный логотип, идеально подходящий вашему бренду.',
+        svc5Price: 'От ₪500',
+        svc6Title: 'Обучение Claude Code',
+        svc6Desc: 'Превратите AI в рабочего партнёра - практическое обучение для бизнеса и частных лиц.',
+        svc6Price: 'От ₪250',
+        svc7Title: 'IT услуги',
+        svc7Desc: 'Помощь с компьютерами, программами и настройками. Персональная и профессиональная техническая поддержка.',
+        svc7Price: 'От ₪150/час',
+        svcBtnStart: 'Начать',
+        svcBtnProjects: 'Смотреть проекты',
+        svcBtnTalk: 'Связаться',
+        svcBtnDetails: 'Подробнее',
+
+        portfolioTitle: 'Избранные работы',
+        portfolioDesc: 'Недавние проекты, которыми мы гордимся',
+        proj1: 'Лендинг стартапа',
+        proj2: 'Образовательная игра для детей',
+        proj3: 'Бизнес-сайт',
+        proj4: 'Редизайн страницы местного бизнеса',
+
+        vibeDesc: 'Создание лендингов и интерактивных впечатлений, которые переводят язык бренда в чёткий цифровой вайб. Проектирование пользовательских путей, ведущих от любопытства к действию - без ощущения навязчивости.',
+        vibeBtn: 'Хотите узнать больше?',
+
+        pricingTitle: 'Цены на услуги',
+        pricingDesc: 'Прозрачные цены, без сюрпризов',
+        pricingLanding: 'Лендинги',
+        pricingWebsites: 'Полные сайты',
+        pricingAutomations: 'Автоматизации и боты',
+        pricingGames: 'Цифровые игры',
+        pricingExperiences: 'Цифровые впечатления',
+        pricingLogo: 'Дизайн логотипа',
+        pricingTraining: 'Обучение Claude Code',
+        pricingIT: 'IT услуги',
+        pricingRedesign: 'Редизайн лендинга',
+        redesignIntro: 'Есть старый лендинг? Превратим его в цифровое золото!',
+        tierQuickRefresh: 'Quick Refresh',
+        tierFullRedesign: 'Full Redesign',
+        tierPlusRedesign: 'Plus+',
+        redesignF1: 'Обновление цветов и типографики',
+        redesignF2: 'Апгрейд CTA кнопок',
+        redesignF3: 'Мобильная оптимизация',
+        redesignF4: 'Улучшение читаемости',
+        redesignF5: 'Полная перестройка',
+        redesignF6: 'Кастомный дизайн',
+        redesignF7: 'Новые изображения и иконки',
+        redesignF8: 'Анимации',
+        redesignF9: 'Полностью адаптивный',
+        redesignF10: 'Всё из Full Redesign',
+        redesignF11: 'Написание маркетинговых текстов',
+        redesignF12: 'SEO оптимизация',
+        redesignF13: 'Интеграция аналитики',
+        redesignF14: 'Поддержка после запуска',
+        redesignTime1: '3-5 рабочих дней',
+        redesignTime2: '7-10 рабочих дней',
+        redesignTime3: '14-21 рабочих дней',
+        newBadge: 'Новинка!',
+        promoNew: 'Новая услуга!',
+        promoTitle: 'У вас старый лендинг?',
+        promoDesc: 'Профессиональный редизайн существующих лендингов - от ₪800. Новый дизайн, улучшенная производительность, больше лидов.',
+        promoBenefit1: '✓ Профессиональный анализ текущей страницы',
+        promoBenefit2: '✓ Современный дизайн под ваш бренд',
+        promoBenefit3: '✓ Оптимизация для мобильных и скорости',
+        promoBenefit4: '✓ Простой и быстрый процесс',
+        promoCta: 'Обновите вашу страницу сейчас',
+        demoBefore: 'До',
+        demoAfter: 'После',
+        demoPlaceholder: 'Демо-видео скоро',
+        tierBasic: 'Базовый',
+        tierAdvanced: 'Продвинутый',
+        tierPremium: 'Премиум',
+        tierBusiness: 'Бизнес',
+        tierEnterprise: 'Энтерпрайз',
+        tierWhatsApp: 'WhatsApp бот',
+        tierFullSystem: 'Полная система',
+        tierSimpleGame: 'Простая игра',
+        tierCustomGame: 'Кастомная игра',
+        tierAdvancedGame: 'Продвинутая игра',
+        tierDigitalInvite: 'Цифровое приглашение',
+        tierInteractiveInvite: 'Интерактивное приглашение',
+        tierFullExperience: 'Полное впечатление',
+        tierProfessional: 'Профессиональный',
+        tierFullIdentity: 'Полная айдентика',
+        tierIntro: 'Введение',
+        tierHourly: 'Почасовая поддержка',
+        tierMonthly: 'Месячный пакет',
+        tierBadge: 'Самый популярный',
+        tierBtn: 'Выбрать',
+        landingF1: 'Один лендинг',
+        landingF2: 'Кастомный дизайн',
+        landingF3: 'Контактная форма',
+        landingF4: 'Поддержка месяц',
+        landingF5: 'До 3 страниц',
+        landingF6: 'Анимации',
+        landingF7: 'Базовый SEO',
+        landingF8: 'Поддержка 2 месяца',
+        landingF9: 'До 5 страниц',
+        landingF10: 'Продвинутые анимации',
+        landingF11: 'Полный SEO',
+        landingF12: 'Поддержка 3 месяца',
+        landingF13: 'Интеграции',
+        websiteF1: 'До 10 страниц',
+        websiteF2: 'CMS',
+        websiteF3: 'Премиум дизайн',
+        websiteF4: 'Полный SEO',
+        websiteF5: 'Без ограничений страниц',
+        websiteF6: 'Блог',
+        websiteF7: 'Интеграции',
+        websiteF8: 'Годовая поддержка',
+        websiteF9: 'Кастомное решение',
+        websiteF10: 'Выделенное приложение',
+        websiteF11: 'Кастомный API',
+        websiteF12: 'Выделенная поддержка',
+        autoF1: 'Одна автоматизация',
+        autoF2: 'Настройка и тесты',
+        autoF3: 'Документация',
+        autoF4: 'Кастомный бот',
+        autoF5: 'Авто-ответы',
+        autoF6: 'Интерактивное меню',
+        autoF7: 'Поддержка месяц',
+        autoF8: 'Множество автоматизаций',
+        autoF9: 'Интеграции CRM',
+        autoF10: 'Отчёты',
+        autoF11: 'Годовая поддержка',
+        gameF1: 'Базовая игра',
+        gameF2: 'Кастомный дизайн',
+        gameF3: 'Мобайл и десктоп',
+        gameF4: 'Продвинутые механики',
+        gameF5: 'Сохранение прогресса',
+        gameF6: 'Эффекты и анимации',
+        gameF7: 'Сложные механики',
+        gameF8: 'Мультиплеер',
+        gameF9: 'Лидерборд',
+        gameF10: 'Аналитика',
+        expF1: 'Кастомный дизайн',
+        expF2: 'Анимации',
+        expF3: 'Лёгкий шеринг',
+        expF4: 'Фотогалерея',
+        expF5: 'Интерактивная карта',
+        expF6: 'Обратный отсчёт',
+        expF7: 'Музыка',
+        expF8: 'Интерактивная история',
+        expF9: 'Мини-игра',
+        expF10: 'Полная кастомизация',
+        expF11: 'Аналитика',
+        logoF1: '3 варианта дизайна',
+        logoF2: '2 раунда правок',
+        logoF3: 'Файлы PNG/SVG',
+        logoF4: '5 вариантов дизайна',
+        logoF5: 'Правки без ограничений',
+        logoF6: 'Гайд бренда',
+        logoF7: 'Все форматы',
+        logoF8: 'Логотип + визитка',
+        logoF9: 'Фирменный бланк',
+        logoF10: 'Подпись email',
+        logoF11: 'Полный гайд бренда',
+        trainF1: 'Полтора часа',
+        trainF2: 'Основы Claude',
+        trainF3: 'Практика',
+        trainF4: 'Материалы для продолжения',
+        trainF5: '3 часа',
+        trainF6: 'Продвинутые техники',
+        trainF7: 'Практический проект',
+        trainF8: 'Поддержка в WhatsApp',
+        trainF9: 'Обучение команды',
+        trainF10: 'Адаптация для бизнеса',
+        trainF11: '5 участников',
+        trainF12: 'Месячное сопровождение',
+        itF1: 'Решение проблем',
+        itF2: 'Настройки',
+        itF3: 'Установки',
+        itF4: 'Удалённо или на месте',
+        itF5: 'До 4 часов поддержки',
+        itF6: 'Быстрый ответ',
+        itF7: 'Бэкапы',
+        itF8: 'Мониторинг',
+
+        processTitle: 'Процесс работы',
+        processSubtitle: 'От идеи до запуска - наш путь создания магии',
+        step1: 'Знакомство',
+        step1Desc: 'Поймём ваши потребности и мечты',
+        step2: 'Предложение',
+        step2Desc: 'Адаптировано для вашего проекта',
+        step3: 'Планирование',
+        step3Desc: 'Проектирование решения и дизайна',
+        step4: 'Разработка',
+        step4Desc: 'Создание с регулярными обновлениями',
+        step5: 'Тестирование',
+        step5Desc: 'Проверка идеальной работы',
+        step6: 'Запуск',
+        step6Desc: 'Выход в эфир и передача',
+        step7: 'Поддержка',
+        step7Desc: 'Мы здесь и после запуска',
+
+        // Testimonials
+        testimonialsTitle: 'Что о нас говорят',
+
+        faqTitle: 'Частые вопросы',
+        faqSubtitle: 'Всё, что нужно знать',
+        faq1Q: 'Что такое Vibe Coding?',
+        faq1A: 'Vibe Coding - это наш подход к разработке - не просто писать код, а создавать цифровые впечатления, которые ощущаются правильно. Это значит обращать внимание на мелкие детали, анимации, поток пользователя - всё, что превращает хороший продукт в потрясающий.',
+        faq2Q: 'Сколько времени занимает проект?',
+        faq2A: 'Зависит от типа проекта. Простой лендинг - 3-5 дней. Полный сайт - 2-4 недели. Автоматизации - от недели до двух. Мы дадим точную оценку на ознакомительном звонке.',
+        faq3Q: 'Есть поддержка после запуска?',
+        faq3A: 'Конечно! Мы не исчезаем после сдачи проекта. Период поддержки включён, и всегда можно расширить до постоянной поддержки по необходимости.',
+        faq4Q: 'Что делает AI GOODIN уникальным?',
+        faq4A: 'Мы сочетаем глубокий технический опыт с креативным подходом. Мы не просто разработчики - мы партнёры, которые понимают ваш бизнес и создают решения, которые действительно работают.',
+
+        contactTitle: 'Начнём ваш проект',
+        contactSubtitle: 'Расскажите о проекте, и мы ответим в течение 24 часов',
+        formContact: 'Контактная информация',
+        formProject: 'Детали проекта',
+        formName: 'Полное имя *',
+        formEmail: 'Эл. почта *',
+        formPhone: 'Телефон',
+        formProjectType: 'Тип проекта *',
+        formOptLanding: 'Лендинг',
+        formOptWebsite: 'Полный сайт',
+        formOptAutomation: 'Автоматизация / Бот',
+        formOptGame: 'Цифровая игра',
+        formOptTraining: 'Обучение Claude Code',
+        formOptOther: 'Другое',
+        formBudget: 'Бюджет',
+        formOptUnsure: 'Пока не уверен',
+        formTimeline: 'Сроки',
+        formOpt1_2Weeks: '1-2 недели',
+        formOpt1Month: 'В течение месяца',
+        formOptFlexible: 'Гибко',
+        formTextarea: 'Расскажите о проекте... Какое у вас видение? Какую проблему вы решаете?',
+        formSubmit: 'Отправить и получить оценку',
+
+        footerDesc: 'Цифровая студия, сочетающая передовые технологии с креативностью и интуицией.',
+        footerServices: 'Услуги',
+        footerCompany: 'Компания',
+        footerRights: 'Все права защищены'
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      const t = translations[lang];
+
+      // Keep RTL layout, only change lang attribute
+      document.documentElement.lang = lang;
+
+      // Update language buttons
+      document.querySelectorAll('.nav-lang-btn').forEach(btn => {
+        const btnText = btn.textContent.toLowerCase();
+        btn.classList.toggle('active', btnText === lang);
+      });
+
+      // Set text direction for content (not navbar/layout)
+      const textDir = (lang === 'he') ? 'rtl' : 'ltr';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        // Skip nav elements - they keep RTL
+        if (!el.closest('nav') && !el.closest('.nav-lang')) {
+          el.style.direction = textDir;
+        }
+      });
+
+      // Update elements with data-i18n attribute
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) {
+          if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+            el.placeholder = t[key];
+          } else {
+            el.textContent = t[key];
+          }
+        }
+      });
+
+      // Save preference
+      localStorage.setItem('preferredLang', lang);
+    }
+
+    // Load saved language on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const savedLang = localStorage.getItem('preferredLang');
+      if (savedLang && translations[savedLang]) {
+        setLanguage(savedLang);
+      }
+    });
+
+    // ===== PRICING ACCORDION =====
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const wasActive = item.classList.contains('active');
+
+        // Close all accordions
+        document.querySelectorAll('.pricing-accordion-item').forEach(i => {
+          i.classList.remove('active');
+        });
+
+        // Open clicked one if it wasn't active
+        if (!wasActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // ===== GOLDEN GEARS + CIRCUIT TRACES - אלכימיה טכנולוגית =====
+    const canvas = document.getElementById('gears-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let scrollY = 0;
+    let time = 0;
+
+    const gears = [];
+    const circuits = [];
+
+    // ALL GOODIN BRAND COLORS - כל צבעי המותג
+    const goodinColors = [
+      // Gold spectrum
+      { r: 255, g: 215, b: 0 },    // Gold light #FFD700
+      { r: 255, g: 165, b: 0 },    // Orange gold #FFA500
+      { r: 255, g: 140, b: 0 },    // Dark orange #FF8C00
+      // Purple spectrum
+      { r: 139, g: 92, b: 246 },   // Purple light #8B5CF6
+      { r: 167, g: 139, b: 250 },  // Purple bright #A78BFA
+      { r: 99, g: 102, b: 241 },   // Indigo #6366F1
+      // Cyan spectrum
+      { r: 6, g: 182, b: 212 },    // Cyan #06B6D4
+      { r: 0, g: 212, b: 255 },    // Cyan light #00D4FF
+    ];
+
+    // ===== CIRCUIT TRACES - קווי לוח אם עם זהב זורם =====
+    class CircuitTrace {
+      constructor(startX, startY) {
+        this.points = [];
+        this.generatePath(startX, startY);
+        this.flowOffset = Math.random() * 100;
+        this.flowSpeed = 0.05 + Math.random() * 0.05;
+        this.opacity = 0.2 + Math.random() * 0.25;
+      }
+
+      generatePath(startX, startY) {
+        let x = startX;
+        let y = startY;
+        this.points.push({ x, y });
+
+        const segments = 4 + Math.floor(Math.random() * 6);
+        for (let i = 0; i < segments; i++) {
+          const direction = Math.floor(Math.random() * 4);
+          const length = 80 + Math.random() * 200;
+
+          switch (direction) {
+            case 0: x += length; break;
+            case 1: x -= length; break;
+            case 2: y += length; break;
+            case 3: y -= length; break;
+          }
+
+          this.points.push({ x, y, isNode: Math.random() > 0.5 });
+        }
+      }
+
+      draw(ctx, time) {
+        if (this.points.length < 2) return;
+
+        // Draw trace line
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(255, 215, 0, ${this.opacity * 0.25})`;
+        ctx.lineWidth = 1.5;
+
+        for (let i = 0; i < this.points.length; i++) {
+          const p = this.points[i];
+          const yOffset = p.y - scrollY * 0.1;
+          if (i === 0) ctx.moveTo(p.x, yOffset);
+          else ctx.lineTo(p.x, yOffset);
+        }
+        ctx.stroke();
+
+        // Flowing gold particles
+        const totalLength = this.getPathLength();
+        const flowPos = ((time * this.flowSpeed + this.flowOffset) % 100) / 100;
+
+        for (let f = 0; f < 3; f++) {
+          const particlePos = (flowPos + f * 0.33) % 1;
+          const point = this.getPointAtLength(particlePos * totalLength);
+          if (point) {
+            const yOffset = point.y - scrollY * 0.1;
+            const gradient = ctx.createRadialGradient(point.x, yOffset, 0, point.x, yOffset, 12);
+            gradient.addColorStop(0, `rgba(255, 215, 0, ${this.opacity * 1.5})`);
+            gradient.addColorStop(0.4, `rgba(255, 165, 0, ${this.opacity})`);
+            gradient.addColorStop(1, 'rgba(255, 140, 0, 0)');
+            ctx.beginPath();
+            ctx.fillStyle = gradient;
+            ctx.arc(point.x, yOffset, 12, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        // Draw nodes
+        this.points.forEach(p => {
+          if (p.isNode) {
+            const yOffset = p.y - scrollY * 0.1;
+            ctx.beginPath();
+            ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity * 0.6})`;
+            ctx.arc(p.x, yOffset, 3, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
+      }
+
+      getPathLength() {
+        let length = 0;
+        for (let i = 1; i < this.points.length; i++) {
+          const dx = this.points[i].x - this.points[i - 1].x;
+          const dy = this.points[i].y - this.points[i - 1].y;
+          length += Math.sqrt(dx * dx + dy * dy);
+        }
+        return length;
+      }
+
+      getPointAtLength(targetLength) {
+        let length = 0;
+        for (let i = 1; i < this.points.length; i++) {
+          const dx = this.points[i].x - this.points[i - 1].x;
+          const dy = this.points[i].y - this.points[i - 1].y;
+          const segmentLength = Math.sqrt(dx * dx + dy * dy);
+          if (length + segmentLength >= targetLength) {
+            const t = (targetLength - length) / segmentLength;
+            return { x: this.points[i - 1].x + dx * t, y: this.points[i - 1].y + dy * t };
+          }
+          length += segmentLength;
+        }
+        return this.points[this.points.length - 1];
+      }
+    }
+
+    // ===== GOLDEN GEARS =====
+    class Gear {
+      constructor(x, y, radius, teeth, speed, colorIndex, connected = null) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.teeth = teeth;
+        this.toothHeight = radius * 0.15;
+        this.speed = speed;
+        this.angle = Math.random() * Math.PI * 2;
+        this.color = goodinColors[colorIndex % goodinColors.length];
+        this.connected = connected;
+        this.direction = 1;
+        this.opacity = 0.4 + Math.random() * 0.35;
+      }
+
+      update() {
+        if (this.connected) {
+          const ratio = this.connected.radius / this.radius;
+          this.angle = -this.connected.angle * ratio;
+        } else {
+          this.angle += this.speed * this.direction;
+        }
+      }
+
+      draw(ctx) {
+        const { x, y, radius, teeth, toothHeight, angle, color, opacity } = this;
+
+        ctx.save();
+        ctx.translate(x, y - scrollY * 0.2);
+        ctx.rotate(angle);
+
+        ctx.beginPath();
+        const innerRadius = radius - toothHeight;
+
+        for (let i = 0; i < teeth * 2; i++) {
+          const a = (i * Math.PI) / teeth;
+          const r = i % 2 === 0 ? radius : innerRadius;
+          const px = Math.cos(a) * r;
+          const py = Math.sin(a) * r;
+          if (i === 0) ctx.moveTo(px, py);
+          else ctx.lineTo(px, py);
+        }
+        ctx.closePath();
+
+        ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity * 0.15})`;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, radius * 0.3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity * 0.2})`;
+        ctx.fill();
+        ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity * 0.6})`;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(0, 0, radius * 0.08, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity})`;
+        ctx.fill();
+
+        for (let i = 0; i < 4; i++) {
+          const spokeAngle = (i * Math.PI) / 2;
+          ctx.beginPath();
+          ctx.moveTo(Math.cos(spokeAngle) * radius * 0.35, Math.sin(spokeAngle) * radius * 0.35);
+          ctx.lineTo(Math.cos(spokeAngle) * (innerRadius - 5), Math.sin(spokeAngle) * (innerRadius - 5));
+          ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${opacity * 0.4})`;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+
+        ctx.restore();
+      }
+    }
+
+    function createGearSystem(centerX, centerY, mainRadius, colorStart) {
+      const system = [];
+      const main = new Gear(centerX, centerY, mainRadius, 12, 0.005, colorStart);
+      system.push(main);
+
+      const positions = [
+        { angle: 0, radiusMult: 0.6, teeth: 8 },
+        { angle: Math.PI * 0.7, radiusMult: 0.8, teeth: 10 },
+        { angle: Math.PI * 1.3, radiusMult: 0.5, teeth: 7 },
+      ];
+
+      positions.forEach((pos, i) => {
+        const r = mainRadius * pos.radiusMult;
+        const distance = mainRadius + r - 5;
+        const gx = centerX + Math.cos(pos.angle) * distance;
+        const gy = centerY + Math.sin(pos.angle) * distance;
+        system.push(new Gear(gx, gy, r, pos.teeth, 0, colorStart + 1 + i, main));
+      });
+
+      return system;
+    }
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initGears();
+      initCircuits();
+    }
+
+    function initCircuits() {
+      circuits.length = 0;
+      for (let i = 0; i < 12; i++) {
+        circuits.push(new CircuitTrace(Math.random() * width, Math.random() * height * 2.5));
+      }
+    }
+
+    function initGears() {
+      gears.length = 0;
+
+      // גלגלים גם ב-HERO - נראים מיד!
+      const systems = [
+        // Hero area - גלגלים שנראים מיד בכניסה לעמוד
+        { x: width * 0.08, y: height * 0.05, r: 90, c: 0 },
+        { x: width * 0.92, y: height * 0.03, r: 75, c: 1 },
+        { x: width * 0.75, y: height * 0.15, r: 65, c: 2 },
+        { x: width * 0.25, y: height * 0.18, r: 55, c: 3 },
+        { x: width * 0.5, y: height * 0.08, r: 50, c: 4 },
+        { x: width * 0.15, y: height * 0.35, r: 80, c: 5 },
+        { x: width * 0.85, y: height * 0.32, r: 70, c: 0 },
+        // Below hero
+        { x: width * 0.06, y: height * 0.55, r: 85, c: 1 },
+        { x: width * 0.94, y: height * 0.6, r: 70, c: 2 },
+        { x: width * 0.5, y: height * 0.75, r: 95, c: 3 },
+        { x: width * 0.2, y: height * 1.0, r: 65, c: 4 },
+        { x: width * 0.8, y: height * 0.95, r: 85, c: 5 },
+        { x: width * 0.35, y: height * 1.3, r: 55, c: 0 },
+        { x: width * 0.65, y: height * 1.4, r: 75, c: 1 },
+        { x: width * 0.15, y: height * 1.7, r: 90, c: 2 },
+        { x: width * 0.85, y: height * 1.6, r: 65, c: 3 },
+      ];
+
+      systems.forEach(sys => gears.push(...createGearSystem(sys.x, sys.y, sys.r, sys.c)));
+
+      for (let i = 0; i < 12; i++) {
+        gears.push(new Gear(
+          Math.random() * width,
+          Math.random() * height * 2.2,
+          22 + Math.random() * 35,
+          5 + Math.floor(Math.random() * 4),
+          0.003 + Math.random() * 0.004,
+          Math.floor(Math.random() * goodinColors.length)
+        ));
+      }
+    }
+
+    function animate() {
+      time++;
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, height);
+      gradient.addColorStop(0, '#1E1030');
+      gradient.addColorStop(0.5, '#12091d');
+      gradient.addColorStop(1, '#000000');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, width, height);
+
+      scrollY = window.scrollY;
+
+      circuits.forEach(c => c.draw(ctx, time));
+      gears.forEach(gear => { gear.update(); gear.draw(ctx); });
+
+      requestAnimationFrame(animate);
+    }
+
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    window.addEventListener('resize', resize);
+    resize();
+    animate();
+  </script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>
