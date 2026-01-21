@@ -1,0 +1,263 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500">
+  <defs>
+    <!-- Background gradient - dark teal -->
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0c1919"/>
+      <stop offset="100%" stop-color="#040909"/>
+    </radialGradient>
+    
+    <!-- Bright gold for G and main circle -->
+    <linearGradient id="goldBright" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFE55C"/>
+      <stop offset="30%" stop-color="#F4C542"/>
+      <stop offset="100%" stop-color="#E8B923"/>
+    </linearGradient>
+    
+    <!-- Inner glow gradient -->
+    <radialGradient id="innerGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1a1208" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0d0903" stop-opacity="0.95"/>
+    </radialGradient>
+    
+    <!-- Strong glow for main elements -->
+    <filter id="strongGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="8" result="blur1"/>
+      <feGaussianBlur stdDeviation="15" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Medium glow -->
+    <filter id="mediumGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Subtle glow for circuits -->
+    <filter id="subtleGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="500" height="500" fill="url(#bgGradient)"/>
+  
+  <!-- Outer diamond shape -->
+  <g opacity="0.4">
+    <path d="M250 35 L465 250 L250 465 L35 250 Z" 
+          fill="none" 
+          stroke="#C9A227" 
+          stroke-width="1"/>
+    <path d="M250 55 L445 250 L250 445 L55 250 Z" 
+          fill="none" 
+          stroke="#C9A227" 
+          stroke-width="0.5"
+          opacity="0.5"/>
+  </g>
+  
+  <!-- ============ CIRCUIT TRACES - TOP ============ -->
+  <g filter="url(#subtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+    <path d="M250 155 L250 45"/>
+    <path d="M250 70 L250 55 L235 55 L235 40"/>
+    <path d="M250 70 L265 70 L265 40"/>
+    <circle cx="250" cy="45" r="3" fill="#F4C542"/>
+    <circle cx="235" cy="40" r="2.5" fill="#F4C542"/>
+    <circle cx="265" cy="40" r="2.5" fill="#F4C542"/>
+    <path d="M250 120 L220 120 L220 95 L190 95"/>
+    <path d="M220 95 L220 75 L200 75 L200 55"/>
+    <path d="M190 95 L190 75 L170 75"/>
+    <path d="M190 95 L175 95 L175 110 L155 110"/>
+    <circle cx="190" cy="95" r="2.5" fill="#F4C542"/>
+    <circle cx="200" cy="55" r="2" fill="#E8B923"/>
+    <circle cx="170" cy="75" r="2" fill="#E8B923"/>
+    <circle cx="155" cy="110" r="2.5" fill="#F4C542"/>
+    <path d="M220 120 L220 135 L195 135 L195 120"/>
+    <path d="M195 135 L180 135 L180 150"/>
+    <circle cx="195" cy="120" r="2" fill="#E8B923"/>
+    <circle cx="180" cy="150" r="2" fill="#E8B923"/>
+    <path d="M250 120 L280 120 L280 95 L310 95"/>
+    <path d="M280 95 L280 75 L300 75 L300 55"/>
+    <path d="M310 95 L310 75 L330 75"/>
+    <path d="M310 95 L325 95 L325 110 L345 110"/>
+    <circle cx="310" cy="95" r="2.5" fill="#F4C542"/>
+    <circle cx="300" cy="55" r="2" fill="#E8B923"/>
+    <circle cx="330" cy="75" r="2" fill="#E8B923"/>
+    <circle cx="345" cy="110" r="2.5" fill="#F4C542"/>
+    <path d="M280 120 L280 135 L305 135 L305 120"/>
+    <path d="M305 135 L320 135 L320 150"/>
+    <circle cx="305" cy="120" r="2" fill="#E8B923"/>
+    <circle cx="320" cy="150" r="2" fill="#E8B923"/>
+  </g>
+  
+  <!-- ============ CIRCUIT TRACES - BOTTOM ============ -->
+  <g filter="url(#subtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+    <path d="M250 345 L250 455"/>
+    <path d="M250 430 L250 445 L235 445 L235 460"/>
+    <path d="M250 430 L265 430 L265 460"/>
+    <circle cx="250" cy="455" r="3" fill="#F4C542"/>
+    <circle cx="235" cy="460" r="2.5" fill="#F4C542"/>
+    <circle cx="265" cy="460" r="2.5" fill="#F4C542"/>
+    <path d="M250 380 L220 380 L220 405 L190 405"/>
+    <path d="M220 405 L220 425 L200 425 L200 445"/>
+    <path d="M190 405 L190 425 L170 425"/>
+    <path d="M190 405 L175 405 L175 390 L155 390"/>
+    <circle cx="190" cy="405" r="2.5" fill="#F4C542"/>
+    <circle cx="200" cy="445" r="2" fill="#E8B923"/>
+    <circle cx="170" cy="425" r="2" fill="#E8B923"/>
+    <circle cx="155" cy="390" r="2.5" fill="#F4C542"/>
+    <path d="M220 380 L220 365 L195 365 L195 380"/>
+    <path d="M195 365 L180 365 L180 350"/>
+    <circle cx="195" cy="380" r="2" fill="#E8B923"/>
+    <circle cx="180" cy="350" r="2" fill="#E8B923"/>
+    <path d="M250 380 L280 380 L280 405 L310 405"/>
+    <path d="M280 405 L280 425 L300 425 L300 445"/>
+    <path d="M310 405 L310 425 L330 425"/>
+    <path d="M310 405 L325 405 L325 390 L345 390"/>
+    <circle cx="310" cy="405" r="2.5" fill="#F4C542"/>
+    <circle cx="300" cy="445" r="2" fill="#E8B923"/>
+    <circle cx="330" cy="425" r="2" fill="#E8B923"/>
+    <circle cx="345" cy="390" r="2.5" fill="#F4C542"/>
+    <path d="M280 380 L280 365 L305 365 L305 380"/>
+    <path d="M305 365 L320 365 L320 350"/>
+    <circle cx="305" cy="380" r="2" fill="#E8B923"/>
+    <circle cx="320" cy="350" r="2" fill="#E8B923"/>
+  </g>
+  
+  <!-- ============ CIRCUIT TRACES - LEFT ============ -->
+  <g filter="url(#subtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+    <path d="M155 250 L45 250"/>
+    <path d="M70 250 L55 250 L55 235 L40 235"/>
+    <path d="M70 250 L70 265 L40 265"/>
+    <circle cx="45" cy="250" r="3" fill="#F4C542"/>
+    <circle cx="40" cy="235" r="2.5" fill="#F4C542"/>
+    <circle cx="40" cy="265" r="2.5" fill="#F4C542"/>
+    <path d="M120 250 L120 220 L95 220 L95 190"/>
+    <path d="M95 220 L75 220 L75 200 L55 200"/>
+    <path d="M95 190 L75 190 L75 170"/>
+    <path d="M95 190 L95 175 L110 175 L110 155"/>
+    <circle cx="95" cy="190" r="2.5" fill="#F4C542"/>
+    <circle cx="55" cy="200" r="2" fill="#E8B923"/>
+    <circle cx="75" cy="170" r="2" fill="#E8B923"/>
+    <circle cx="110" cy="155" r="2.5" fill="#F4C542"/>
+    <path d="M120 250 L120 280 L95 280 L95 310"/>
+    <path d="M95 280 L75 280 L75 300 L55 300"/>
+    <path d="M95 310 L75 310 L75 330"/>
+    <path d="M95 310 L95 325 L110 325 L110 345"/>
+    <circle cx="95" cy="310" r="2.5" fill="#F4C542"/>
+    <circle cx="55" cy="300" r="2" fill="#E8B923"/>
+    <circle cx="75" cy="330" r="2" fill="#E8B923"/>
+    <circle cx="110" cy="345" r="2.5" fill="#F4C542"/>
+    <path d="M120 220 L135 220 L135 195"/>
+    <path d="M120 280 L135 280 L135 305"/>
+    <circle cx="135" cy="195" r="2" fill="#E8B923"/>
+    <circle cx="135" cy="305" r="2" fill="#E8B923"/>
+  </g>
+  
+  <!-- ============ CIRCUIT TRACES - RIGHT ============ -->
+  <g filter="url(#subtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+    <path d="M345 250 L455 250"/>
+    <path d="M430 250 L445 250 L445 235 L460 235"/>
+    <path d="M430 250 L430 265 L460 265"/>
+    <circle cx="455" cy="250" r="3" fill="#F4C542"/>
+    <circle cx="460" cy="235" r="2.5" fill="#F4C542"/>
+    <circle cx="460" cy="265" r="2.5" fill="#F4C542"/>
+    <path d="M380 250 L380 220 L405 220 L405 190"/>
+    <path d="M405 220 L425 220 L425 200 L445 200"/>
+    <path d="M405 190 L425 190 L425 170"/>
+    <path d="M405 190 L405 175 L390 175 L390 155"/>
+    <circle cx="405" cy="190" r="2.5" fill="#F4C542"/>
+    <circle cx="445" cy="200" r="2" fill="#E8B923"/>
+    <circle cx="425" cy="170" r="2" fill="#E8B923"/>
+    <circle cx="390" cy="155" r="2.5" fill="#F4C542"/>
+    <path d="M380 250 L380 280 L405 280 L405 310"/>
+    <path d="M405 280 L425 280 L425 300 L445 300"/>
+    <path d="M405 310 L425 310 L425 330"/>
+    <path d="M405 310 L405 325 L390 325 L390 345"/>
+    <circle cx="405" cy="310" r="2.5" fill="#F4C542"/>
+    <circle cx="445" cy="300" r="2" fill="#E8B923"/>
+    <circle cx="425" cy="330" r="2" fill="#E8B923"/>
+    <circle cx="390" cy="345" r="2.5" fill="#F4C542"/>
+    <path d="M380 220 L365 220 L365 195"/>
+    <path d="M380 280 L365 280 L365 305"/>
+    <circle cx="365" cy="195" r="2" fill="#E8B923"/>
+    <circle cx="365" cy="305" r="2" fill="#E8B923"/>
+  </g>
+  
+  <!-- ============ DIAGONAL CIRCUITS ============ -->
+  <g filter="url(#subtleGlow)" stroke="#E8B923" fill="none" stroke-width="1.2">
+    <path d="M175 175 L140 140 L110 110"/>
+    <path d="M140 140 L125 140 L110 125"/>
+    <path d="M140 140 L140 125 L125 110"/>
+    <path d="M125 140 L125 155 L110 155"/>
+    <circle cx="110" cy="110" r="2.5" fill="#F4C542"/>
+    <circle cx="110" cy="125" r="2" fill="#E8B923"/>
+    <circle cx="125" cy="110" r="2" fill="#E8B923"/>
+    <circle cx="110" cy="155" r="2" fill="#E8B923"/>
+    <path d="M325 175 L360 140 L390 110"/>
+    <path d="M360 140 L375 140 L390 125"/>
+    <path d="M360 140 L360 125 L375 110"/>
+    <path d="M375 140 L375 155 L390 155"/>
+    <circle cx="390" cy="110" r="2.5" fill="#F4C542"/>
+    <circle cx="390" cy="125" r="2" fill="#E8B923"/>
+    <circle cx="375" cy="110" r="2" fill="#E8B923"/>
+    <circle cx="390" cy="155" r="2" fill="#E8B923"/>
+    <path d="M175 325 L140 360 L110 390"/>
+    <path d="M140 360 L125 360 L110 375"/>
+    <path d="M140 360 L140 375 L125 390"/>
+    <path d="M125 360 L125 345 L110 345"/>
+    <circle cx="110" cy="390" r="2.5" fill="#F4C542"/>
+    <circle cx="110" cy="375" r="2" fill="#E8B923"/>
+    <circle cx="125" cy="390" r="2" fill="#E8B923"/>
+    <circle cx="110" cy="345" r="2" fill="#E8B923"/>
+    <path d="M325 325 L360 360 L390 390"/>
+    <path d="M360 360 L375 360 L390 375"/>
+    <path d="M360 360 L360 375 L375 390"/>
+    <path d="M375 360 L375 345 L390 345"/>
+    <circle cx="390" cy="390" r="2.5" fill="#F4C542"/>
+    <circle cx="390" cy="375" r="2" fill="#E8B923"/>
+    <circle cx="375" cy="390" r="2" fill="#E8B923"/>
+    <circle cx="390" cy="345" r="2" fill="#E8B923"/>
+  </g>
+  
+  <!-- Decorative arcs around the circle -->
+  <g filter="url(#mediumGlow)" opacity="0.6">
+    <path d="M160 180 A100 100 0 0 1 180 160" fill="none" stroke="#C9A227" stroke-width="1"/>
+    <path d="M340 180 A100 100 0 0 0 320 160" fill="none" stroke="#C9A227" stroke-width="1"/>
+    <path d="M160 320 A100 100 0 0 0 180 340" fill="none" stroke="#C9A227" stroke-width="1"/>
+    <path d="M340 320 A100 100 0 0 1 320 340" fill="none" stroke="#C9A227" stroke-width="1"/>
+  </g>
+  
+  <!-- Main circle - single bright ring -->
+  <circle cx="250" cy="250" r="95" 
+          fill="none" 
+          stroke="url(#goldBright)" 
+          stroke-width="8" 
+          filter="url(#strongGlow)"/>
+  
+  <!-- Inner warm glow fill -->
+  <circle cx="250" cy="250" r="90" fill="url(#innerGlow)"/>
+  
+  <!-- The G letter - JUST THE ARC WITH HORIZONTAL BAR -->
+  <!-- Moved down by 5px (cy from 250 to 255) for better centering -->
+  <g filter="url(#strongGlow)">
+    <!-- Arc: starts at top-right, goes almost full circle, ends at right-middle -->
+    <!-- Then horizontal bar goes inward -->
+    <path d="M 289 210
+             A 55 55 0 1 0 305 255
+             L 250 255" 
+          fill="none" 
+          stroke="url(#goldBright)" 
+          stroke-width="8"
+          stroke-linecap="round"/>
+  </g>
+</svg>
