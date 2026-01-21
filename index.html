@@ -2127,6 +2127,27 @@
       border-color: var(--gold-light);
     }
 
+    /* Gold Liquid Cursor Trail */
+    .cursor-trail {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      will-change: transform, opacity;
+    }
+
+    .cursor-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, rgba(255, 165, 0, 0.4) 50%, transparent 70%);
+      mix-blend-mode: screen;
+      filter: blur(1px);
+      will-change: transform, opacity;
+    }
+
     /* WhatsApp Button */
     .whatsapp-btn {
       position: fixed;
@@ -2648,16 +2669,6 @@
         <a href="#contact" class="service-btn" data-i18n="svcBtnDetails">לפרטים</a>
       </div>
     </div>
-  </section>
-
-  <!-- Vibe Coding Section -->
-  <section class="vibe-coding">
-    <h2 class="vibe-title">VIBE CODING</h2>
-    <p class="vibe-description" data-i18n="vibeDesc">
-      בניית דפי נחיתה וחוויות אינטראקטיביות שמתרגמות את השפה של המותג לוייב דיגיטלי ברור.
-      תכנון מסלולי משתמש שמובילים משלב הסקרנות לפעולה – בלי להרגיש "מכירתיים מדי".
-    </p>
-    <a href="#contact" class="btn-primary" data-i18n="vibeBtn">רוצה לדעת עוד?</a>
   </section>
 
   <!-- Portfolio Section - Selected Works -->
@@ -4309,6 +4320,9 @@
     };
 
     // WhatsApp Form Submission
+    // Google Sheets Script URL - replace with your own
+    const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
     function submitToWhatsApp(event) {
       event.preventDefault();
 
@@ -4319,6 +4333,18 @@
       const budget = document.getElementById('formBudget').value;
       const timeline = document.getElementById('formTimeline').value;
       const message = document.getElementById('formMessage').value;
+
+      const formData = { name, email, phone, projectType, budget, timeline, message, timestamp: new Date().toISOString() };
+
+      // Save to Google Sheets
+      if (GOOGLE_SHEET_URL && !GOOGLE_SHEET_URL.includes('YOUR_SCRIPT_ID')) {
+        fetch(GOOGLE_SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData)
+        }).catch(err => console.log('Sheet save attempted'));
+      }
 
       // Build WhatsApp message
       let waMessage = `🚀 *פנייה חדשה מהאתר*\n\n`;
@@ -4335,8 +4361,9 @@
       const waUrl = `https://wa.me/972542491999?text=${encodeURIComponent(waMessage)}`;
       window.open(waUrl, '_blank');
 
-      // Show success message
-      alert('מעביר אותך ל-WhatsApp לשליחת ההודעה...');
+      // Clear form and show success
+      document.getElementById('contactForm').reset();
+      alert('✅ הפרטים נשמרו! מעביר אותך ל-WhatsApp...');
 
       return false;
     }
@@ -4715,6 +4742,76 @@
     window.addEventListener('resize', resize);
     resize();
     animate();
+
+    // Gold Liquid Cursor Trail
+    (function() {
+      const particles = [];
+      const particleCount = 12;
+      const colors = ['#FFD700', '#FFA500', '#FFB347', '#FFCC00', '#DAA520'];
+
+      // Create particles
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'cursor-particle';
+        particle.style.width = Math.random() * 15 + 8 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.opacity = '0';
+        document.body.appendChild(particle);
+        particles.push({
+          el: particle,
+          x: 0,
+          y: 0,
+          targetX: 0,
+          targetY: 0,
+          delay: i * 2,
+          size: parseFloat(particle.style.width),
+          color: colors[i % colors.length]
+        });
+      }
+
+      let mouseX = 0, mouseY = 0;
+      let isMoving = false;
+      let moveTimeout;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        isMoving = true;
+        clearTimeout(moveTimeout);
+        moveTimeout = setTimeout(() => { isMoving = false; }, 100);
+      });
+
+      function animateCursor() {
+        particles.forEach((p, i) => {
+          // Smooth follow with delay
+          const speed = 0.15 - (i * 0.008);
+          p.x += (mouseX - p.x) * speed;
+          p.y += (mouseY - p.y) * speed;
+
+          // Calculate distance from mouse for effects
+          const dist = Math.sqrt(Math.pow(mouseX - p.x, 2) + Math.pow(mouseY - p.y, 2));
+
+          // Dynamic size based on movement
+          const dynamicSize = p.size * (isMoving ? 1 + (dist * 0.002) : 0.5);
+
+          // Opacity based on distance and movement
+          const opacity = isMoving ? Math.max(0.1, 0.8 - (i * 0.05) - (dist * 0.002)) : 0;
+
+          p.el.style.transform = `translate(${p.x - dynamicSize/2}px, ${p.y - dynamicSize/2}px)`;
+          p.el.style.width = dynamicSize + 'px';
+          p.el.style.height = dynamicSize + 'px';
+          p.el.style.opacity = opacity;
+          p.el.style.background = `radial-gradient(circle, ${p.color}cc 0%, ${p.color}66 40%, transparent 70%)`;
+        });
+
+        requestAnimationFrame(animateCursor);
+      }
+
+      // Only enable on desktop
+      if (window.innerWidth > 768) {
+        animateCursor();
+      }
+    })();
   </script>
 
   <!-- Vercel Analytics -->
