@@ -3378,47 +3378,47 @@
     <h2 data-i18n="contactTitle">בואו נתחיל את הפרויקט שלכם</h2>
     <p class="contact-subtitle" data-i18n="contactSubtitle">ספרו לנו על הפרויקט ונחזור אליכם תוך 24 שעות</p>
 
-    <form class="contact-form" onsubmit="return false;">
+    <form class="contact-form" id="contactForm" onsubmit="return submitToWhatsApp(event);">
       <div class="form-grid">
         <!-- Contact Info Column -->
         <div class="form-column">
           <h3 class="form-section-title" data-i18n="formContact">פרטי התקשרות</h3>
-          <input type="text" placeholder="שם מלא *" class="contact-input" data-i18n="formName" required>
-          <input type="email" placeholder="אימייל *" class="contact-input" data-i18n="formEmail" required>
-          <input type="tel" placeholder="טלפון" class="contact-input" data-i18n="formPhone">
+          <input type="text" id="formName" name="name" placeholder="שם מלא *" class="contact-input" data-i18n="formName" required>
+          <input type="email" id="formEmail" name="email" placeholder="אימייל *" class="contact-input" data-i18n="formEmail" required>
+          <input type="tel" id="formPhone" name="phone" placeholder="טלפון" class="contact-input" data-i18n="formPhone">
         </div>
 
         <!-- Project Details Column -->
         <div class="form-column">
           <h3 class="form-section-title" data-i18n="formProject">פרטי הפרויקט</h3>
           <div class="select-wrapper">
-            <select class="contact-input contact-select">
+            <select id="formProjectType" name="projectType" class="contact-input contact-select" required>
               <option value="" data-i18n="formProjectType">סוג הפרויקט *</option>
-              <option value="landing" data-i18n="formOptLanding">דף נחיתה</option>
-              <option value="website" data-i18n="formOptWebsite">אתר מלא</option>
-              <option value="automation" data-i18n="formOptAutomation">אוטומציה / בוט</option>
-              <option value="game" data-i18n="formOptGame">משחק דיגיטלי</option>
-              <option value="training" data-i18n="formOptTraining">הדרכת Claude Code</option>
-              <option value="other" data-i18n="formOptOther">אחר</option>
+              <option value="דף נחיתה" data-i18n="formOptLanding">דף נחיתה</option>
+              <option value="אתר מלא" data-i18n="formOptWebsite">אתר מלא</option>
+              <option value="אוטומציה / בוט" data-i18n="formOptAutomation">אוטומציה / בוט</option>
+              <option value="משחק דיגיטלי" data-i18n="formOptGame">משחק דיגיטלי</option>
+              <option value="הדרכת Claude Code" data-i18n="formOptTraining">הדרכת Claude Code</option>
+              <option value="אחר" data-i18n="formOptOther">אחר</option>
             </select>
           </div>
           <div class="select-wrapper">
-            <select class="contact-input contact-select">
+            <select id="formBudget" name="budget" class="contact-input contact-select">
               <option value="" data-i18n="formBudget">תקציב</option>
-              <option value="500-1500">₪500 - ₪1,500</option>
-              <option value="1500-3000">₪1,500 - ₪3,000</option>
-              <option value="3000-5000">₪3,000 - ₪5,000</option>
-              <option value="5000+">₪5,000+</option>
-              <option value="unsure" data-i18n="formOptUnsure">עוד לא בטוח</option>
+              <option value="₪500-1,500">₪500 - ₪1,500</option>
+              <option value="₪1,500-3,000">₪1,500 - ₪3,000</option>
+              <option value="₪3,000-5,000">₪3,000 - ₪5,000</option>
+              <option value="₪5,000+">₪5,000+</option>
+              <option value="עוד לא בטוח" data-i18n="formOptUnsure">עוד לא בטוח</option>
             </select>
           </div>
           <div class="select-wrapper">
-            <select class="contact-input contact-select">
+            <select id="formTimeline" name="timeline" class="contact-input contact-select">
               <option value="" data-i18n="formTimeline">לוח זמנים</option>
-              <option value="asap">ASAP</option>
-              <option value="1-2weeks" data-i18n="formOpt1_2Weeks">1-2 שבועות</option>
-              <option value="1month" data-i18n="formOpt1Month">תוך חודש</option>
-              <option value="flexible" data-i18n="formOptFlexible">גמיש</option>
+              <option value="ASAP">ASAP</option>
+              <option value="1-2 שבועות" data-i18n="formOpt1_2Weeks">1-2 שבועות</option>
+              <option value="תוך חודש" data-i18n="formOpt1Month">תוך חודש</option>
+              <option value="גמיש" data-i18n="formOptFlexible">גמיש</option>
             </select>
           </div>
         </div>
@@ -3426,7 +3426,7 @@
 
       <!-- Message - Full Width -->
       <div class="form-full-width">
-        <textarea class="contact-input contact-textarea" data-i18n="formTextarea" placeholder="ספרו לנו על הפרויקט... מה החזון שלכם? איזו בעיה אתם פותרים?" rows="5"></textarea>
+        <textarea id="formMessage" name="message" class="contact-input contact-textarea" data-i18n="formTextarea" placeholder="ספרו לנו על הפרויקט... מה החזון שלכם? איזו בעיה אתם פותרים?" rows="5"></textarea>
         <button type="submit" class="btn-gold-submit" data-i18n="formSubmit">שליחה וקבלת הצעת מחיר</button>
       </div>
     </form>
@@ -3437,7 +3437,7 @@
         <span class="contact-link-icon">✉️</span>
         <span>ai.goodin.live@gmail.com</span>
       </a>
-      <a href="https://wa.me/972501234567" class="contact-link">
+      <a href="https://wa.me/972542491999" class="contact-link">
         <span class="contact-link-icon">💬</span>
         <span>WhatsApp</span>
       </a>
@@ -3455,7 +3455,7 @@
         <p class="footer-desc" data-i18n="footerDesc">סטודיו דיגיטלי שמשלב טכנולוגיה מתקדמת עם יצירתיות ואינטואיציה.</p>
         <div class="footer-social">
           <a href="mailto:ai.goodin.live@gmail.com" title="Email">✉️</a>
-          <a href="https://wa.me/972501234567" target="_blank" title="WhatsApp">💬</a>
+          <a href="https://wa.me/972542491999" target="_blank" title="WhatsApp">💬</a>
         </div>
       </div>
 
@@ -3487,7 +3487,7 @@
   </footer>
 
   <!-- WhatsApp Button -->
-  <a href="https://wa.me/972501234567" class="whatsapp-btn" target="_blank">💬</a>
+  <a href="https://wa.me/972542491999" class="whatsapp-btn" target="_blank">💬</a>
 
   <script>
     // ===== LANGUAGE SYSTEM =====
@@ -4307,6 +4307,39 @@
         footerRights: 'Все права защищены'
       }
     };
+
+    // WhatsApp Form Submission
+    function submitToWhatsApp(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('formName').value;
+      const email = document.getElementById('formEmail').value;
+      const phone = document.getElementById('formPhone').value;
+      const projectType = document.getElementById('formProjectType').value;
+      const budget = document.getElementById('formBudget').value;
+      const timeline = document.getElementById('formTimeline').value;
+      const message = document.getElementById('formMessage').value;
+
+      // Build WhatsApp message
+      let waMessage = `🚀 *פנייה חדשה מהאתר*\n\n`;
+      waMessage += `👤 *שם:* ${name}\n`;
+      waMessage += `📧 *אימייל:* ${email}\n`;
+      if (phone) waMessage += `📱 *טלפון:* ${phone}\n`;
+      waMessage += `\n📋 *פרטי הפרויקט:*\n`;
+      waMessage += `• סוג: ${projectType}\n`;
+      if (budget) waMessage += `• תקציב: ${budget}\n`;
+      if (timeline) waMessage += `• לוח זמנים: ${timeline}\n`;
+      if (message) waMessage += `\n💬 *הודעה:*\n${message}`;
+
+      // Open WhatsApp
+      const waUrl = `https://wa.me/972542491999?text=${encodeURIComponent(waMessage)}`;
+      window.open(waUrl, '_blank');
+
+      // Show success message
+      alert('מעביר אותך ל-WhatsApp לשליחת ההודעה...');
+
+      return false;
+    }
 
     function setLanguage(lang) {
       currentLang = lang;
