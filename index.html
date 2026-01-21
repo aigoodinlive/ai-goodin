@@ -12,6 +12,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      overflow-x: hidden;
+    }
+
     :root {
       /* Gold - רק ללוגו והדגשות */
       --gold-light: #FFD700;
@@ -2512,7 +2516,10 @@
     <div class="about-content">
       <!-- Logo Image - REAL PNG -->
       <div class="about-image">
-        <img src="LOGO AI GOODIN.png" alt="AI GOODIN Logo" class="about-logo-img">
+        <picture>
+          <source srcset="logo-optimized.webp" type="image/webp">
+          <img src="LOGO AI GOODIN.png" alt="AI GOODIN Logo" class="about-logo-img" loading="lazy" width="400" height="400">
+        </picture>
       </div>
       <!-- Text Content -->
       <div class="about-text">
