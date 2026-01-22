@@ -2128,13 +2128,32 @@
     }
 
     /* Gold Liquid Cursor Trail - Digital Alchemy */
-    .cursor-particle {
+    .cursor-dot {
       position: fixed;
-      pointer-events: none;
-      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 12px;
+      height: 12px;
+      background: radial-gradient(circle, #FFD700, #FFA500);
       border-radius: 50%;
-      will-change: transform, opacity;
-      filter: blur(0.5px);
+      pointer-events: none;
+      z-index: 99999;
+      box-shadow: 0 0 20px #FFD700, 0 0 40px #FFA500, 0 0 60px #FFD70066;
+      transition: transform 0.1s ease;
+    }
+
+    .cursor-trail-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      background: #FFD700;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      opacity: 0.6;
+      box-shadow: 0 0 10px #FFD700;
     }
 
     /* WhatsApp Button */
@@ -4734,64 +4753,60 @@
 
     // Gold Liquid Cursor Trail - Digital Alchemy Style
     (function() {
-      const particles = [];
-      const particleCount = 15;
-      const colors = ['#FFD700', '#FFA500', '#FFE55C', '#FFCC00', '#DAA520', '#F4C542'];
+      // Only on desktop
+      if (window.innerWidth <= 768) return;
 
-      // Create particles
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'cursor-particle';
-        const size = 20 - (i * 0.8);
-        particle.style.width = size + 'px';
-        particle.style.height = size + 'px';
-        document.body.appendChild(particle);
-        particles.push({
-          el: particle,
-          x: -100,
-          y: -100,
-          size: size,
-          color: colors[i % colors.length]
-        });
+      // Create main cursor dot
+      const cursor = document.createElement('div');
+      cursor.className = 'cursor-dot';
+      document.body.appendChild(cursor);
+
+      // Create trail dots
+      const trailCount = 20;
+      const trail = [];
+      for (let i = 0; i < trailCount; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-trail-dot';
+        dot.style.opacity = (1 - i / trailCount) * 0.5;
+        dot.style.width = (8 - i * 0.3) + 'px';
+        dot.style.height = (8 - i * 0.3) + 'px';
+        document.body.appendChild(dot);
+        trail.push({ el: dot, x: 0, y: 0 });
       }
 
-      let mouseX = -100, mouseY = -100;
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
 
       document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
       });
 
-      function animateCursor() {
-        let prevX = mouseX;
-        let prevY = mouseY;
+      function animate() {
+        // Smooth cursor follow
+        cursorX += (mouseX - cursorX) * 0.2;
+        cursorY += (mouseY - cursorY) * 0.2;
 
-        particles.forEach((p, i) => {
-          // Smooth follow with increasing delay
-          const speed = 0.35 - (i * 0.018);
-          p.x += (prevX - p.x) * speed;
-          p.y += (prevY - p.y) * speed;
+        cursor.style.transform = `translate(${cursorX - 6}px, ${cursorY - 6}px)`;
 
-          // Use this particle's position as target for next
-          prevX = p.x;
-          prevY = p.y;
+        // Trail follows cursor with delay
+        let prevX = cursorX;
+        let prevY = cursorY;
 
-          // Opacity decreases along trail
-          const opacity = 0.9 - (i * 0.05);
-
-          p.el.style.transform = `translate(${p.x - p.size/2}px, ${p.y - p.size/2}px)`;
-          p.el.style.opacity = opacity;
-          p.el.style.background = `radial-gradient(circle, ${p.color} 0%, ${p.color}aa 30%, transparent 70%)`;
-          p.el.style.boxShadow = `0 0 ${10 - i * 0.5}px ${p.color}`;
+        trail.forEach((dot, i) => {
+          const speed = 0.3 - (i * 0.01);
+          dot.x += (prevX - dot.x) * speed;
+          dot.y += (prevY - dot.y) * speed;
+          dot.el.style.transform = `translate(${dot.x - 4}px, ${dot.y - 4}px)`;
+          prevX = dot.x;
+          prevY = dot.y;
         });
 
-        requestAnimationFrame(animateCursor);
+        requestAnimationFrame(animate);
       }
 
-      // Only enable on desktop
-      if (window.innerWidth > 768) {
-        animateCursor();
-      }
+      animate();
+      console.log('Gold cursor trail initialized!');
     })();
 
   </script>
