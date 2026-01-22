@@ -4688,21 +4688,24 @@
 
       // גלגלים גם ב-HERO - נראים מיד!
       const systems = isMobile ? [
-        // Mobile - gears MUCH closer to center to be fully visible
-        { x: width * 0.30, y: height * 0.05, r: 35, c: 0 },
-        { x: width * 0.70, y: height * 0.03, r: 30, c: 1 },
-        { x: width * 0.28, y: height * 0.18, r: 40, c: 2 },
-        { x: width * 0.72, y: height * 0.16, r: 35, c: 3 },
-        { x: width * 0.32, y: height * 0.32, r: 30, c: 4 },
-        { x: width * 0.68, y: height * 0.30, r: 40, c: 5 },
-        { x: width * 0.28, y: height * 0.46, r: 35, c: 0 },
-        { x: width * 0.72, y: height * 0.44, r: 30, c: 1 },
-        { x: width * 0.30, y: height * 0.60, r: 40, c: 2 },
-        { x: width * 0.70, y: height * 0.58, r: 35, c: 3 },
-        { x: width * 0.28, y: height * 0.74, r: 30, c: 4 },
-        { x: width * 0.72, y: height * 0.72, r: 40, c: 5 },
-        { x: width * 0.32, y: height * 0.88, r: 35, c: 0 },
-        { x: width * 0.68, y: height * 0.86, r: 30, c: 1 },
+        // Mobile - gears INSIDE screen, visible next to content
+        // Left side: 0.18-0.22, Right side: 0.78-0.82
+        { x: width * 0.20, y: height * 0.05, r: 32, c: 0 },
+        { x: width * 0.80, y: height * 0.04, r: 28, c: 1 },
+        { x: width * 0.18, y: height * 0.15, r: 35, c: 2 },
+        { x: width * 0.82, y: height * 0.14, r: 32, c: 3 },
+        { x: width * 0.22, y: height * 0.26, r: 28, c: 4 },
+        { x: width * 0.78, y: height * 0.25, r: 35, c: 5 },
+        { x: width * 0.18, y: height * 0.38, r: 32, c: 0 },
+        { x: width * 0.82, y: height * 0.37, r: 28, c: 1 },
+        { x: width * 0.20, y: height * 0.50, r: 35, c: 2 },
+        { x: width * 0.80, y: height * 0.49, r: 32, c: 3 },
+        { x: width * 0.18, y: height * 0.62, r: 28, c: 4 },
+        { x: width * 0.82, y: height * 0.61, r: 35, c: 5 },
+        { x: width * 0.22, y: height * 0.74, r: 32, c: 0 },
+        { x: width * 0.78, y: height * 0.73, r: 28, c: 1 },
+        { x: width * 0.20, y: height * 0.86, r: 35, c: 2 },
+        { x: width * 0.80, y: height * 0.85, r: 32, c: 3 },
       ] : [
         // Desktop - original positions
         { x: width * 0.08, y: height * 0.05, r: 90, c: 0 },
