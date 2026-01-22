@@ -2127,6 +2127,38 @@
       border-color: var(--gold-light);
     }
 
+    /* Sound Toggle Button */
+    .sound-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(30, 16, 48, 0.9);
+      border: 2px solid var(--gold-light);
+      color: var(--gold-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .sound-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+    }
+
+    .sound-toggle.playing {
+      animation: pulse-sound 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-sound {
+      0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+      50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
+    }
+
     /* Gold Liquid Cursor Trail */
     .cursor-trail {
       position: fixed;
@@ -2301,6 +2333,14 @@
   </style>
 </head>
 <body>
+  <!-- Background Music -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2024/11/08/audio_4956b4edd1.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Sound Toggle Button -->
+  <button id="soundToggle" class="sound-toggle" title="Toggle Music">🔇</button>
+
   <canvas id="gears-canvas"></canvas>
 
   <!-- Navigation -->
@@ -4811,6 +4851,57 @@
       if (window.innerWidth > 768) {
         animateCursor();
       }
+    })();
+
+    // Background Music Controller
+    (function() {
+      const music = document.getElementById('bgMusic');
+      const toggle = document.getElementById('soundToggle');
+      let isPlaying = false;
+
+      // Set low volume
+      music.volume = 0.15;
+
+      function playMusic() {
+        music.play().then(() => {
+          isPlaying = true;
+          toggle.textContent = '🔊';
+          toggle.classList.add('playing');
+        }).catch(() => {
+          // Autoplay blocked, wait for interaction
+        });
+      }
+
+      function toggleMusic() {
+        if (isPlaying) {
+          music.pause();
+          isPlaying = false;
+          toggle.textContent = '🔇';
+          toggle.classList.remove('playing');
+        } else {
+          playMusic();
+        }
+      }
+
+      // Toggle button click
+      toggle.addEventListener('click', toggleMusic);
+
+      // Try to autoplay on first user interaction
+      let hasInteracted = false;
+      document.addEventListener('click', function initMusic() {
+        if (!hasInteracted && !isPlaying) {
+          hasInteracted = true;
+          playMusic();
+        }
+      }, { once: false });
+
+      // Also try on scroll
+      document.addEventListener('scroll', function initMusicScroll() {
+        if (!hasInteracted && !isPlaying) {
+          hasInteracted = true;
+          playMusic();
+        }
+      }, { once: true });
     })();
   </script>
 
