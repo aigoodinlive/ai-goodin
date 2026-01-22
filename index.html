@@ -71,13 +71,13 @@
       position: fixed;
       top: 0;
       left: 0;
-      right: 0;
+      width: 100%;
       z-index: 100;
       padding: 1rem 3rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.3s ease;
+      transition: background 0.3s ease, padding 0.3s ease;
       background: linear-gradient(90deg,
         rgba(30, 16, 48, 0.85) 0%,
         rgba(30, 16, 48, 0.6) 20%,
@@ -4813,5 +4813,7 @@
 
   <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
