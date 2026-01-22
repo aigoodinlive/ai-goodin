@@ -2127,57 +2127,14 @@
       border-color: var(--gold-light);
     }
 
-    /* Sound Toggle Button */
-    .sound-toggle {
-      position: fixed;
-      bottom: 30px;
-      right: 30px;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: rgba(30, 16, 48, 0.9);
-      border: 2px solid var(--gold-light);
-      color: var(--gold-light);
-      font-size: 1.5rem;
-      cursor: pointer;
-      z-index: 100;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-    }
-
-    .sound-toggle:hover {
-      transform: scale(1.1);
-      box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
-    }
-
-    .sound-toggle.playing {
-      animation: pulse-sound 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-sound {
-      0%, 100% { box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
-      50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
-    }
-
-    /* Gold Liquid Cursor Trail */
-    .cursor-trail {
+    /* Gold Liquid Cursor Trail - Digital Alchemy */
+    .cursor-particle {
       position: fixed;
       pointer-events: none;
       z-index: 9999;
       border-radius: 50%;
-      mix-blend-mode: screen;
       will-change: transform, opacity;
-    }
-
-    .cursor-particle {
-      position: fixed;
-      pointer-events: none;
-      z-index: 9998;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 215, 0, 0.8) 0%, rgba(255, 165, 0, 0.4) 50%, transparent 70%);
-      mix-blend-mode: screen;
-      filter: blur(1px);
-      will-change: transform, opacity;
+      filter: blur(0.5px);
     }
 
     /* WhatsApp Button */
@@ -2333,14 +2290,6 @@
   </style>
 </head>
 <body>
-  <!-- Background Music -->
-  <audio id="bgMusic" loop preload="auto">
-    <source src="https://cdn.pixabay.com/audio/2024/11/08/audio_4956b4edd1.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Sound Toggle Button -->
-  <button id="soundToggle" class="sound-toggle" title="Toggle Music">🔇</button>
-
   <canvas id="gears-canvas"></canvas>
 
   <!-- Navigation -->
@@ -4783,65 +4732,57 @@
     resize();
     animate();
 
-    // Gold Liquid Cursor Trail
+    // Gold Liquid Cursor Trail - Digital Alchemy Style
     (function() {
       const particles = [];
-      const particleCount = 12;
-      const colors = ['#FFD700', '#FFA500', '#FFB347', '#FFCC00', '#DAA520'];
+      const particleCount = 15;
+      const colors = ['#FFD700', '#FFA500', '#FFE55C', '#FFCC00', '#DAA520', '#F4C542'];
 
       // Create particles
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.className = 'cursor-particle';
-        particle.style.width = Math.random() * 15 + 8 + 'px';
-        particle.style.height = particle.style.width;
-        particle.style.opacity = '0';
+        const size = 20 - (i * 0.8);
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
         document.body.appendChild(particle);
         particles.push({
           el: particle,
-          x: 0,
-          y: 0,
-          targetX: 0,
-          targetY: 0,
-          delay: i * 2,
-          size: parseFloat(particle.style.width),
+          x: -100,
+          y: -100,
+          size: size,
           color: colors[i % colors.length]
         });
       }
 
-      let mouseX = 0, mouseY = 0;
-      let isMoving = false;
-      let moveTimeout;
+      let mouseX = -100, mouseY = -100;
 
       document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        isMoving = true;
-        clearTimeout(moveTimeout);
-        moveTimeout = setTimeout(() => { isMoving = false; }, 100);
       });
 
       function animateCursor() {
+        let prevX = mouseX;
+        let prevY = mouseY;
+
         particles.forEach((p, i) => {
-          // Smooth follow with delay
-          const speed = 0.15 - (i * 0.008);
-          p.x += (mouseX - p.x) * speed;
-          p.y += (mouseY - p.y) * speed;
+          // Smooth follow with increasing delay
+          const speed = 0.35 - (i * 0.018);
+          p.x += (prevX - p.x) * speed;
+          p.y += (prevY - p.y) * speed;
 
-          // Calculate distance from mouse for effects
-          const dist = Math.sqrt(Math.pow(mouseX - p.x, 2) + Math.pow(mouseY - p.y, 2));
+          // Use this particle's position as target for next
+          prevX = p.x;
+          prevY = p.y;
 
-          // Dynamic size based on movement
-          const dynamicSize = p.size * (isMoving ? 1 + (dist * 0.002) : 0.5);
+          // Opacity decreases along trail
+          const opacity = 0.9 - (i * 0.05);
 
-          // Opacity based on distance and movement
-          const opacity = isMoving ? Math.max(0.1, 0.8 - (i * 0.05) - (dist * 0.002)) : 0;
-
-          p.el.style.transform = `translate(${p.x - dynamicSize/2}px, ${p.y - dynamicSize/2}px)`;
-          p.el.style.width = dynamicSize + 'px';
-          p.el.style.height = dynamicSize + 'px';
+          p.el.style.transform = `translate(${p.x - p.size/2}px, ${p.y - p.size/2}px)`;
           p.el.style.opacity = opacity;
-          p.el.style.background = `radial-gradient(circle, ${p.color}cc 0%, ${p.color}66 40%, transparent 70%)`;
+          p.el.style.background = `radial-gradient(circle, ${p.color} 0%, ${p.color}aa 30%, transparent 70%)`;
+          p.el.style.boxShadow = `0 0 ${10 - i * 0.5}px ${p.color}`;
         });
 
         requestAnimationFrame(animateCursor);
@@ -4853,56 +4794,6 @@
       }
     })();
 
-    // Background Music Controller
-    (function() {
-      const music = document.getElementById('bgMusic');
-      const toggle = document.getElementById('soundToggle');
-      let isPlaying = false;
-
-      // Set low volume
-      music.volume = 0.15;
-
-      function playMusic() {
-        music.play().then(() => {
-          isPlaying = true;
-          toggle.textContent = '🔊';
-          toggle.classList.add('playing');
-        }).catch(() => {
-          // Autoplay blocked, wait for interaction
-        });
-      }
-
-      function toggleMusic() {
-        if (isPlaying) {
-          music.pause();
-          isPlaying = false;
-          toggle.textContent = '🔇';
-          toggle.classList.remove('playing');
-        } else {
-          playMusic();
-        }
-      }
-
-      // Toggle button click
-      toggle.addEventListener('click', toggleMusic);
-
-      // Try to autoplay on first user interaction
-      let hasInteracted = false;
-      document.addEventListener('click', function initMusic() {
-        if (!hasInteracted && !isPlaying) {
-          hasInteracted = true;
-          playMusic();
-        }
-      }, { once: false });
-
-      // Also try on scroll
-      document.addEventListener('scroll', function initMusicScroll() {
-        if (!hasInteracted && !isPlaying) {
-          hasInteracted = true;
-          playMusic();
-        }
-      }, { once: true });
-    })();
   </script>
 
   <!-- Vercel Analytics -->
