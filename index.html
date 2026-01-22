@@ -126,11 +126,8 @@
     }
 
     .logo-text {
-      color: var(--white);
-    }
-
-    .nav-logo-svg {
-      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+      color: var(--gold-light);
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
     }
 
 
@@ -2235,10 +2232,23 @@
       }
 
       .nav {
-        padding: 1rem;
+        padding: 0.8rem 1rem;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 1.5rem;
       }
 
       .nav-links {
+        display: none;
+      }
+
+      .nav-lang {
+        gap: 0.3rem;
+      }
+
+      .nav-cta {
         display: none;
       }
 
@@ -2314,23 +2324,7 @@
   <!-- Navigation -->
   <nav class="nav">
     <div class="logo">
-      <svg class="nav-logo-svg" viewBox="0 0 500 500" width="40" height="40">
-        <defs>
-          <linearGradient id="navGold" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#FFE55C"/>
-            <stop offset="50%" stop-color="#F4C542"/>
-            <stop offset="100%" stop-color="#E8B923"/>
-          </linearGradient>
-          <filter id="navGlow" x="-50%" y="-50%" width="200%" height="200%">
-            <feGaussianBlur stdDeviation="6" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
-        <circle cx="250" cy="250" r="95" fill="none" stroke="url(#navGold)" stroke-width="12" filter="url(#navGlow)"/>
-        <circle cx="250" cy="250" r="85" fill="#1a1208" fill-opacity="0.9"/>
-        <path d="M 289 210 A 55 55 0 1 0 305 255 L 250 255" fill="none" stroke="url(#navGold)" stroke-width="12" stroke-linecap="round" filter="url(#navGlow)"/>
-      </svg>
-      <span class="logo-text">AI GOODIN</span>
+      <span class="logo-text">GOODIN</span>
     </div>
     <ul class="nav-links">
       <li><a href="#services" data-i18n="navServices">שירותים</a></li>
@@ -4688,9 +4682,26 @@
     function initGears() {
       gears.length = 0;
 
+      const isMobile = width < 768;
+      const gearScale = isMobile ? 0.6 : 1;
+
       // גלגלים גם ב-HERO - נראים מיד!
-      const systems = [
-        // Hero area - גלגלים שנראים מיד בכניסה לעמוד
+      const systems = isMobile ? [
+        // Mobile - smaller gears, more visible on sides
+        { x: width * 0.15, y: height * 0.08, r: 50 * gearScale, c: 0 },
+        { x: width * 0.85, y: height * 0.05, r: 45 * gearScale, c: 1 },
+        { x: width * 0.1, y: height * 0.25, r: 55 * gearScale, c: 2 },
+        { x: width * 0.9, y: height * 0.22, r: 50 * gearScale, c: 3 },
+        { x: width * 0.2, y: height * 0.45, r: 45 * gearScale, c: 4 },
+        { x: width * 0.8, y: height * 0.42, r: 55 * gearScale, c: 5 },
+        { x: width * 0.12, y: height * 0.65, r: 50 * gearScale, c: 0 },
+        { x: width * 0.88, y: height * 0.62, r: 45 * gearScale, c: 1 },
+        { x: width * 0.18, y: height * 0.85, r: 55 * gearScale, c: 2 },
+        { x: width * 0.82, y: height * 0.88, r: 50 * gearScale, c: 3 },
+        { x: width * 0.1, y: height * 1.1, r: 45 * gearScale, c: 4 },
+        { x: width * 0.9, y: height * 1.05, r: 55 * gearScale, c: 5 },
+      ] : [
+        // Desktop - original positions
         { x: width * 0.08, y: height * 0.05, r: 90, c: 0 },
         { x: width * 0.92, y: height * 0.03, r: 75, c: 1 },
         { x: width * 0.75, y: height * 0.15, r: 65, c: 2 },
@@ -4698,7 +4709,6 @@
         { x: width * 0.5, y: height * 0.08, r: 50, c: 4 },
         { x: width * 0.15, y: height * 0.35, r: 80, c: 5 },
         { x: width * 0.85, y: height * 0.32, r: 70, c: 0 },
-        // Below hero
         { x: width * 0.06, y: height * 0.55, r: 85, c: 1 },
         { x: width * 0.94, y: height * 0.6, r: 70, c: 2 },
         { x: width * 0.5, y: height * 0.75, r: 95, c: 3 },
