@@ -2228,7 +2228,8 @@
     }
 
     .hero h1 {
-        font-size: 2.5rem;
+        font-size: 2rem;
+        padding: 0 2rem;
       }
 
       .nav {
@@ -4687,19 +4688,21 @@
 
       // גלגלים גם ב-HERO - נראים מיד!
       const systems = isMobile ? [
-        // Mobile - smaller gears, more visible on sides
-        { x: width * 0.15, y: height * 0.08, r: 50 * gearScale, c: 0 },
-        { x: width * 0.85, y: height * 0.05, r: 45 * gearScale, c: 1 },
-        { x: width * 0.1, y: height * 0.25, r: 55 * gearScale, c: 2 },
-        { x: width * 0.9, y: height * 0.22, r: 50 * gearScale, c: 3 },
-        { x: width * 0.2, y: height * 0.45, r: 45 * gearScale, c: 4 },
-        { x: width * 0.8, y: height * 0.42, r: 55 * gearScale, c: 5 },
-        { x: width * 0.12, y: height * 0.65, r: 50 * gearScale, c: 0 },
-        { x: width * 0.88, y: height * 0.62, r: 45 * gearScale, c: 1 },
-        { x: width * 0.18, y: height * 0.85, r: 55 * gearScale, c: 2 },
-        { x: width * 0.82, y: height * 0.88, r: 50 * gearScale, c: 3 },
-        { x: width * 0.1, y: height * 1.1, r: 45 * gearScale, c: 4 },
-        { x: width * 0.9, y: height * 1.05, r: 55 * gearScale, c: 5 },
+        // Mobile - gears closer to center to be visible
+        { x: width * 0.22, y: height * 0.06, r: 40 * gearScale, c: 0 },
+        { x: width * 0.78, y: height * 0.04, r: 35 * gearScale, c: 1 },
+        { x: width * 0.18, y: height * 0.20, r: 45 * gearScale, c: 2 },
+        { x: width * 0.82, y: height * 0.18, r: 40 * gearScale, c: 3 },
+        { x: width * 0.25, y: height * 0.35, r: 35 * gearScale, c: 4 },
+        { x: width * 0.75, y: height * 0.33, r: 45 * gearScale, c: 5 },
+        { x: width * 0.20, y: height * 0.50, r: 40 * gearScale, c: 0 },
+        { x: width * 0.80, y: height * 0.48, r: 35 * gearScale, c: 1 },
+        { x: width * 0.22, y: height * 0.65, r: 45 * gearScale, c: 2 },
+        { x: width * 0.78, y: height * 0.63, r: 40 * gearScale, c: 3 },
+        { x: width * 0.18, y: height * 0.80, r: 35 * gearScale, c: 4 },
+        { x: width * 0.82, y: height * 0.78, r: 45 * gearScale, c: 5 },
+        { x: width * 0.25, y: height * 0.95, r: 40 * gearScale, c: 0 },
+        { x: width * 0.75, y: height * 0.93, r: 35 * gearScale, c: 1 },
       ] : [
         // Desktop - original positions
         { x: width * 0.08, y: height * 0.05, r: 90, c: 0 },
