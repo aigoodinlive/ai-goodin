@@ -167,6 +167,111 @@
       box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
     }
 
+    /* Hamburger Menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 101;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: white;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(10, 5, 20, 0.98);
+      backdrop-filter: blur(15px);
+      z-index: 99;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu-links {
+      list-style: none;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+    }
+
+    .mobile-menu-links li {
+      margin-bottom: 1.5rem;
+    }
+
+    .mobile-menu-links a {
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-menu-links a:hover {
+      color: var(--gold-light);
+    }
+
+    .mobile-menu-lang {
+      display: flex;
+      gap: 10px;
+    }
+
+    .mobile-menu-lang .nav-lang-btn {
+      padding: 10px 18px;
+      font-size: 1rem;
+    }
+
+    .mobile-menu-cta {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold-dark));
+      color: var(--purple-dark);
+      padding: 1rem 2.5rem;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-cta:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+
     /* Sections */
     section {
       position: relative;
@@ -2255,11 +2360,15 @@
       }
 
       .nav-lang {
-        gap: 0.3rem;
+        display: none;
       }
 
       .nav-cta {
         display: none;
+      }
+
+      .hamburger {
+        display: flex;
       }
 
       .hero-buttons {
@@ -2347,7 +2456,30 @@
       <button class="nav-lang-btn" onclick="setLanguage('ru')">RU</button>
     </div>
     <a href="#contact" class="nav-cta" data-i18n="navCta">בואו נדבר</a>
+
+    <!-- Mobile Hamburger -->
+    <button class="hamburger" onclick="toggleMobileMenu()" aria-label="תפריט">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul class="mobile-menu-links">
+      <li><a href="#services" data-i18n="navServices" onclick="closeMobileMenu()">שירותים</a></li>
+      <li><a href="#pricing" data-i18n="navPricing" onclick="closeMobileMenu()">מחירים</a></li>
+      <li><a href="#testimonials" data-i18n="navTestimonials" onclick="closeMobileMenu()">המלצות</a></li>
+      <li><a href="#contact" data-i18n="navContact" onclick="closeMobileMenu()">צור קשר</a></li>
+    </ul>
+    <div class="mobile-menu-lang">
+      <button class="nav-lang-btn" onclick="setLanguage('he')">HE</button>
+      <button class="nav-lang-btn" onclick="setLanguage('en')">EN</button>
+      <button class="nav-lang-btn" onclick="setLanguage('ru')">RU</button>
+    </div>
+    <a href="#contact" class="mobile-menu-cta" data-i18n="navCta" onclick="closeMobileMenu()">בואו נדבר</a>
+  </div>
 
   <!-- Hero Section -->
   <!-- GOODIN Logo placed outside circuit-container -->
@@ -3509,10 +3641,24 @@
     </div>
   </footer>
 
-  <!-- WhatsApp Button -->
-  <a href="https://wa.me/972542491999" class="whatsapp-btn" target="_blank">💬</a>
-
   <script>
+    // ===== MOBILE MENU =====
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.hamburger');
+      menu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+      document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : '';
+    }
+
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const hamburger = document.querySelector('.hamburger');
+      menu.classList.remove('active');
+      hamburger.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
     // ===== LANGUAGE SYSTEM =====
     let currentLang = 'he';
 
