@@ -453,6 +453,18 @@
       opacity: 0.8;
     }
 
+    .project-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.5s ease;
+    }
+
+    .project-card:hover .project-img {
+      transform: scale(1.05);
+    }
+
     .project-category {
       position: absolute;
       top: 1rem;
@@ -697,7 +709,7 @@
     <!-- Project 1: נטע קלונר -->
     <div class="project-card" data-category="landing">
       <div class="project-image">
-        <span class="project-icon">🧣</span>
+        <img src="images/projects/netta-kloner-landing.png" alt="דף נחיתה נטע קלונר" class="project-img">
         <span class="project-category">Landing Page</span>
       </div>
       <div class="project-info">
@@ -710,7 +722,7 @@
     <!-- Project 2: HeART Burn -->
     <div class="project-card" data-category="event">
       <div class="project-image">
-        <span class="project-icon">💔</span>
+        <img src="images/projects/heart-burn.png" alt="HeART Burn Event" class="project-img">
         <span class="project-category event">Event</span>
       </div>
       <div class="project-info">
@@ -736,7 +748,7 @@
     <!-- Project 4: Interactive Invitation -->
     <div class="project-card" data-category="event">
       <div class="project-image">
-        <span class="project-icon">💌</span>
+        <img src="images/projects/bday-invitation.png" alt="הזמנה דיגיטלית" class="project-img">
         <span class="project-category event">Invitation</span>
       </div>
       <div class="project-info">
@@ -749,7 +761,7 @@
     <!-- Project 5: Emoji Sudoku -->
     <div class="project-card" data-category="game">
       <div class="project-image">
-        <span class="project-icon">😀</span>
+        <img src="images/projects/emoji-sudoku.png" alt="Emoji Sudoku Game" class="project-img">
         <span class="project-category game">Game</span>
       </div>
       <div class="project-info">
@@ -762,7 +774,7 @@
     <!-- Project 6: Maze Creator -->
     <div class="project-card" data-category="game">
       <div class="project-image">
-        <span class="project-icon">🔲</span>
+        <img src="images/projects/maze-game.png" alt="משחק המבוך" class="project-img">
         <span class="project-category game">Game</span>
       </div>
       <div class="project-info">
@@ -775,7 +787,7 @@
     <!-- Project 7: Cognitive Games -->
     <div class="project-card" data-category="app">
       <div class="project-image">
-        <span class="project-icon">🧠</span>
+        <img src="images/projects/cognitive-games.png" alt="משחקים קוגניטיביים" class="project-img">
         <span class="project-category app">App</span>
       </div>
       <div class="project-info">
