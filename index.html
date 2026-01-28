@@ -818,6 +818,18 @@
       overflow: hidden;
     }
 
+    .portfolio-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform 0.5s ease;
+    }
+
+    .portfolio-card:hover .portfolio-image img {
+      transform: scale(1.05);
+    }
+
     .portfolio-image.purple {
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.4), rgba(139, 92, 246, 0.3));
     }
@@ -2823,56 +2835,47 @@
       <p data-i18n="portfolioDesc">פרויקטים אחרונים שאנחנו גאים בהם</p>
     </div>
     <div class="portfolio-grid">
-      <div class="portfolio-card">
+      <a href="https://valentine-event.vercel.app/" target="_blank" class="portfolio-card">
         <div class="portfolio-image">
-          <div class="portfolio-mockup">
-            <div class="mockup-bar"></div>
-            <div class="mockup-content"></div>
-          </div>
+          <img src="images/projects/valentine-event.png" alt="Valentine's Night 2025">
         </div>
         <div class="portfolio-info">
-          <h3 data-i18n="proj1">דף נחיתה לסטארטאפ</h3>
-          <span class="portfolio-category">Vibe Coding</span>
+          <h3>Valentine's Night 2025</h3>
+          <span class="portfolio-category">Event</span>
         </div>
-      </div>
-      <div class="portfolio-card">
-        <div class="portfolio-image purple">
-          <div class="portfolio-mockup">
-            <div class="mockup-bar"></div>
-            <div class="mockup-content"></div>
-          </div>
+      </a>
+      <a href="https://nettakloner.base44.app/" target="_blank" class="portfolio-card">
+        <div class="portfolio-image">
+          <img src="images/projects/netta-kloner-landing.png" alt="סדנת סריגה נטע קלונר">
         </div>
         <div class="portfolio-info">
-          <h3 data-i18n="proj2">משחק חינוכי לילדים</h3>
+          <h3>סדנת מחמם צוואר</h3>
+          <span class="portfolio-category">Landing Page</span>
+        </div>
+      </a>
+      <a href="https://cognitive-games.base44.app/" target="_blank" class="portfolio-card">
+        <div class="portfolio-image">
+          <img src="images/projects/cognitive-games.png" alt="משחקים קוגניטיביים">
+        </div>
+        <div class="portfolio-info">
+          <h3>MINDFit - אימון מוח</h3>
           <span class="portfolio-category">Games</span>
         </div>
-      </div>
-      <div class="portfolio-card">
-        <div class="portfolio-image cyan">
+      </a>
+      <a href="projects.html" class="portfolio-card">
+        <div class="portfolio-image gold">
           <div class="portfolio-mockup">
             <div class="mockup-bar"></div>
-            <div class="mockup-content"></div>
-          </div>
-        </div>
-        <div class="portfolio-info">
-          <h3 data-i18n="proj3">אתר תדמית לעסק</h3>
-          <span class="portfolio-category">Websites</span>
-        </div>
-      </div>
-      <div class="portfolio-card">
-        <div class="portfolio-image gold">
-          <div class="portfolio-mockup redesign-mockup">
-            <div class="mockup-bar"></div>
             <div class="mockup-content">
-              <div class="before-after-icon">🔄</div>
+              <div class="before-after-icon">+</div>
             </div>
           </div>
         </div>
         <div class="portfolio-info">
-          <h3 data-i18n="proj4">שדרוג דף לעסק מקומי</h3>
-          <span class="portfolio-category redesign-category">Redesign</span>
+          <h3>עוד פרויקטים</h3>
+          <span class="portfolio-category redesign-category">View All</span>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 
